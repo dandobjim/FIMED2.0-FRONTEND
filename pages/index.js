@@ -1,62 +1,42 @@
 import React from 'react';
-import Head from 'next/head';
-import {css} from '@emotion/core';
-import Footer from '../public/static/WEB-INF/Footer';
-import Header_loging from '../components/layouts/Header_loging'
-import Link from 'next/link';
-import HeadLoging from '../public/static/WEB-INF/HeadLoging'
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 
+const MOCKED_API = process.env.MOCKED_API || 'http://jsonplaceholder.typicode.com';
 
-const Loging = () => {
-  return ( 
-    <>
-      
-      <HeadLoging/>
+export async function getServerSideProps(ctx) {
+	// next.js will pre-render this page on each request
+	const data = await fetch(`${MOCKED_API}/users/`);
+	const items = await data.json();
 
-      <body>
-        <div className = "container">
-          <div className="panel panel-default">
-            <div className="page-header" css = {css` margin-top:0px; `}></div>
-            <Header_loging/> 
-             
-            <div class="form-group">
-              <label for="username" class="col-sm-2 control-label">Username</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="username" name="username"/>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="password" class="col-sm-2 control-label">Password</label>
-              <div class="col-sm-10">
-                <input type="password" class="form-control" id="password" name="password"/>
-              </div>
-            </div>
-
-              <div className="form-group">
-                <label for="validate" className="col-sm-2 control-label" >Sign In:</label>
-                <button  type = "submit" className= "btn btn-primary" css={css`margin-top: 10px;`}>Sign In</button>
-              </div>
-              <div className="form-group">
-                <label for="register" className="col-sm-2 control-label" >Sign up:</label>
-                <Link href="/registerUser">
-                  <button  type = "button" className= "btn btn-primary" css={css`margin-top: 10px;`}>Sign Up</button>
-                </Link>
-              </div>
-          </div>
-          <form>
-
-
-          </form>
-
-          
-
-        </div>
-        <Footer/>
-        
-      </body>
-    </>
-   );
+	return {
+		props: { items },
+	}
 }
- 
-export default Loging;
+
+const Index = (props) => {
+	const { items } = props;
+	return (
+		<>
+			<head>
+				<Header />
+			</head>
+			<body>
+				<main>
+					<div className="container">
+						<div className="panel panel-default">
+							<div className="panel-body">
+								<ul>
+									{items.map(i => <li>{i.name}</li>)}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</main>
+				<Footer />
+			</body>
+		</>
+	);
+}
+
+export default Index;
