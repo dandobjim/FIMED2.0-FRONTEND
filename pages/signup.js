@@ -1,11 +1,33 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { css } from '@emotion/core';
 import Footer from '../components/Footer';
 import Link from 'next/link';
 import Header from '../components/Header';
 import LogoContainer from '../components/Logo';
 
-const Signup = () => {
+
+class Signup extends Component{
+	constructor(props){
+		super(props)
+		this.state = {
+			submitting: false,
+			submitted: false
+		}
+	}
+	submitForm(data){
+		fetch('http:/localhost:8080/api/v2/auth/register', {
+			method: 'post',
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		}).then((res)=>{
+			res.status === 200 ? this.setState({submitted:true}): ''
+		})
+	}
+	render (){
+		const title = 'Sign Up'
 	return (
     <>
       <head>
@@ -58,9 +80,7 @@ const Signup = () => {
 								<br />
 								<div className="form-group">
 									<div className="col-sm-offset-2 col-sm-10">
-										<Link href="/register">
 											<button id="execBtn" type="submit" className="btn btn-primary" css={css`margin-top: 7px;`}>Sign up</button>
-										</Link>
 									</div>
 								</div>
 							</form>
@@ -81,6 +101,7 @@ const Signup = () => {
       </body>
     </>
 	);
+}
 }
 
 export default Signup;
