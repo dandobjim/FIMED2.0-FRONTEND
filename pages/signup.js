@@ -29,12 +29,12 @@ class Signup extends Component{
 	render (){
 		const title = 'Sign Up'
 	return (
-    <>
-      <head>
-        <Header />
-      </head>
-      <body>
-        <main>
+		<>
+    	<head>
+        	<Header />
+      	</head>
+      	<body>
+        	<main>
 				<div className="container">
 					<div className="panel panel-default">
 						<div className="panel-body">
@@ -88,20 +88,20 @@ class Signup extends Component{
 							<form  >
 								<div className="form-group">
 									<a css={css`font-family:bold;`}>Come back to Login page: </a>
-									<Link href="/">
-										<button type="submit" className="btn btn-primary" css={css`margin-top: 7px; margin-left: 7px;`}>Go to login</button>
-									</Link>
+										<Link href = "/">
+											<button type="submit" className="btn btn-primary" css={css`margin-top: 7px; margin-left: 7px;`}>Go to login</button>
+										</Link>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
-        </main>
-        <Footer />
-      </body>
-    </>
+        	</main>
+			<Footer />
+      	</body>
+		</>
 	);
-}
+	}
 }
 
 export default Signup;
