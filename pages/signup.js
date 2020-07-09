@@ -8,7 +8,7 @@ import LogoContainer from '../components/Logo';
 
 class Signup extends Component{
 	constructor(props){
-		super(props)
+		super(props);
 		this.state = {
 			submitting: false,
 			submitted: false
@@ -27,7 +27,7 @@ class Signup extends Component{
 		})
 	}
 	render (){
-		const title = 'Sign Up'
+		const title = 'Sign Up';
 	return (
     <>
       <head>
