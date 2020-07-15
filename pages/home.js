@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { css } from '@emotion/core';
+import Link from 'next/link';
 
 
 const Home = () => {
@@ -14,31 +15,37 @@ const Home = () => {
 			<body>
 				<Navbar />
 				<main>
-					<div class="container">
-						<div class="panel panel-default">
-							<div class="panel-body">
-								<div class="page-header" css={css`margin-top: 0px;`}>
+					<div className="container">
+						<div className="panel panel-default">
+							<div className="panel-body">
+								<div className="page-header" css={css`margin-top: 0px;`}>
 									<h1>Add or search a patient (s):</h1>
 								</div>
 								<form>
-									<div class="row">
-										<div class="col-md-6">
+									<div className="row">
+										<div className="col-md-6">
 											<h3>Add patient's data columns </h3>
-											<button type="submit" class="btn btn-primary btn-lg btn-block">Form design</button>
+											<Link href = "/createForm">
+												<button type="submit" className="btn btn-primary btn-lg btn-block">Form design</button>
+											</Link>
 										</div>
-										<div class="col-md-6">
+										<div className="col-md-6">
 											<h3>Search patients</h3>
-											<button type="submit" class="btn btn-primary btn-lg btn-block">Search patient (s)</button>
+											<Link href="/patientList">
+												<button type="submit" className="btn btn-primary btn-lg btn-block">Search patient (s)</button>
+											</Link>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-6">
+									<div className="row">
+										<div className="col-md-6">
 											<h3>Add new patient</h3>
-											<button type="submit" class="btn btn-primary btn-lg btn-block">Add patient (s)</button>
+											<Link href ="/createPatient">
+												<button type="submit" className="btn btn-primary btn-lg btn-block">Add patient (s)</button>
+											</Link>
 										</div>
-										<div class="col-md-6">
+										<div className="col-md-6">
 											<h3>Analyze your patients' genetic expression data</h3>
-											<button type="submit" class="btn btn-primary btn-lg btn-block">Gene level expression analysis</button>
+											<button type="submit" className="btn btn-primary btn-lg btn-block">Gene level expression analysis</button>
 										</div>
 									</div>
 								</form>

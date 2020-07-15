@@ -79,7 +79,7 @@ const Navbar = () => {
 							<Link href="/createPatient"><a><strong>Add</strong></a></Link>
 						</li>
 						<li>
-							<Link href="/searchPage"><a><strong>Search</strong></a></Link>
+							<Link href="/patientList"><a><strong>Search</strong></a></Link>
 						</li>
 						<li className="dropdown">
 							<a href="#" className="dropdown-toggle" data-toggle="dropdown"><strong>Analysis</strong><span className="caret"></span></a>

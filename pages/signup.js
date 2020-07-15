@@ -15,7 +15,7 @@ class Signup extends Component{
 		}
 	}
 	submitForm(data){
-		fetch('http:/localhost:8080/api/v2/auth/register', {
+		fetch('http://localhost:8080/api/v2/auth/register', {
 			method: 'post',
 			headers: {
 				'Accept': 'application/json, text/plain, */*',

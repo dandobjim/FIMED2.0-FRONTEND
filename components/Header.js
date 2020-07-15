@@ -4,7 +4,7 @@ const Head = () => {
 	return (
 		<>
 			{/* Meta tags */}
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 			<meta name="description" content="FIMED is a web-service oriented to provide users flexible integration of biomedical data and gene expression analysis from multiple sources" />
 			<meta name="author" content="Khaos Group. Language and Computing Science Department. University of Malaga" />
@@ -21,6 +21,7 @@ const Head = () => {
 				rel="stylesheet"
 			/>
 			<link href="/static/css/style.css" rel="stylesheet" />
+			<link href="/static/css/styleform.css" rel="stylesheet" />
 
 			{/* jQuery */}
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
