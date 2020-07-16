@@ -1,66 +1,80 @@
-import React from 'react'
-import {css} from '@emotion/core'
+import React, { useState } from 'react'
+import {CONSTANTS} from "../shared/Constants";
 
-class Form extends React.Component{
-    state = {
-        rows: [{name:"", type:""}]
-    }
 
-    // States
-        addRow = (e) => {
-            this.setState((prevState) => ({
-                rows: [...prevState.rows, {name:"", type:""}]
-            }));
+const DEFAULT_SELECTION = "String";
+
+
+const Form = () => {
+  const [rows, setRows] = useState([]);
+
+  const incrRow = () => {
+    setRows([...rows, { name: "", rtype: DEFAULT_SELECTION }])
+  }
+
+  const handleChange = e => {
+    const _rows = [...rows];
+    _rows[e.target.dataset.id][e.target.name] = e.target.value;
+
+    setRows(_rows)
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    fetch(`${CONSTANTS.API.url}/api/v2/form/create`, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYW51ZWwiLCJleHAiOjE1OTQ4MTAxMDV9.ymXYgiPh4xZ7VSayZf-Ep-_sSjUyA_v5HHv-aOsjyGA'
+      },
+      body: JSON.stringify({ rows: rows })
+    }).then((res) => {
+      console.log(res)
+    })
+  }
+
+  return (
+    <>
+      <button className="btn-sm btn-primary button-field" onClick={incrRow}>
+        Add row
+      </button>
+
+      <form onSubmit={handleSubmit} onChange={handleChange}>
+        {
+          rows.map((item, index) => {
+            return (
+              <div className="row" key={index}>
+                <div className="col-md-6 col-md">
+                  <label className="control-label">{`Name #${index + 1}: `}</label>
+                  <input className="form-control" data-id={index} name="name" type="text" />
+
+                  <div className="form-group">
+                    <label className="control-label">Type:</label>
+                    <select className="form-control" data-id={index} name="rtype" defaultValue="String">
+                      <option value="String">String</option>
+                      <option value="Integer">Number</option>
+                      <option value="Date">Date</option>
+                      <option value="Boolean">Boolean</option>
+                      <option value="Textarea">textarea</option>
+                    </select>
+                    <hr />
+                  </div>
+
+                </div>
+              </div>
+            )
+          })
         }
+        <input type="submit" value="Submit" className="btn-sm btn-primary button-field" />
+      </form>
 
-        handleSubmit = (e) => {e.preventDefault()}
-
-        handleChange = (e) => {
-            if (["name", "type"].includes(e.target.className)){
-                let rows = [...this.state.rows]
-                rows[e.target.dataset.id][e.target.className] = e.target.value
-                this.setState({ rows }, () => console.log(this.state.rows))
-            } else {
-                this.setState({ [e.target.name]: e.target.value })
-            }
-        }
-
-    render(){
-        let {rows} = this.state
-
-        return(
-            <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
-                <button className="btn-sm btn-primary button-field" onClick={this.addRow}>Add row</button>{
-                    rows.map((val,index) => {
-                        let nameId = `name-${index}`, typeId = `type-${index}`
-                        return(
-                            <div className = "row">
-                                <div key = {index} className="col-md-6 col-md">
-                                    <label className="control-label" htmlFor={nameId}>{`Name #${index + 1}: `}</label>
-                                    <input type="text" name={nameId} data-id={index} id={nameId} className="form-control"/>
-                                    
-                                    <div className = "form-group">
-                                        <label className="control-label" htmlFor={typeId}>Type:</label>
-                                        <select className="form-control" id={typeId} name="values">
-                                                <option selected value="String">String</option>
-                                                <option value="Integer">Number</option>
-                                                <option value="Date">Date</option>
-                                                <option value="Boolean">Checkbox</option>
-                                                <option value="Textarea">textarea</option>
-                                        </select>
-                                        <hr/>
-                                </div>
-                                
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-                <button className="btn-sm btn-primary button-field" onClick={this.addRow} css={css `margin-right:2rem;`}>Add row</button>
-                <input type="submit" value="Submit"  className="btn-sm btn-primary button-field"/>
-            </form>
-        )
-    }
+      <button className="btn-sm btn-primary button-field" onClick={incrRow}>
+        Add row
+            </button>
+    </>
+  )
 }
 
 export default Form;

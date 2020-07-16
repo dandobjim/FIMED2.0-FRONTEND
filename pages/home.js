@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import Header from '../components/Header';
+import Head from '../components/Head';
 import Footer from '../components/Footer';
 import { css } from '@emotion/core';
 import Link from 'next/link';
@@ -10,7 +10,7 @@ const Home = () => {
 	return (
 		<>
 			<head>
-				<Header />
+				<Head />
 			</head>
 			<body>
 				<Navbar />
@@ -25,7 +25,7 @@ const Home = () => {
 									<div className="row">
 										<div className="col-md-6">
 											<h3>Add patient's data columns </h3>
-											<Link href = "/createForm">
+											<Link href = "/formDesign">
 												<button type="submit" className="btn btn-primary btn-lg btn-block">Form design</button>
 											</Link>
 										</div>

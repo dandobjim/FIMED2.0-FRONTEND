@@ -2,14 +2,14 @@ import React from 'react';
 import { css } from '@emotion/core';
 import Footer from '../components/Footer';
 import Link from 'next/link';
-import Header from '../components/Header';
+import Head from '../components/Head';
 import LogoContainer from '../components/Logo';
 
 const Logging = () => {
   return (
     <>
       <head>
-        <Header />
+        <Head />
       </head>
       <body>
         <main>
@@ -39,7 +39,7 @@ const Logging = () => {
                 </div>
                 <div className="form-group">
                   <label for="register" className="col-sm-2 control-label" >Sign up:</label>
-                  <Link href="/registerUser">
+                  <Link href="/signup">
                     <button type="button" className="btn btn-primary" css={css`margin-top: 10px;`}>Sign Up</button>
                   </Link>
                 </div>

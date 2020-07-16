@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from '../components/Footer';
-import Header from '../components/Header';
+import Head from '../components/Head';
 
 const MOCKED_API = process.env.MOCKED_API || 'http://jsonplaceholder.typicode.com';
 
@@ -19,7 +19,7 @@ const Index = (props) => {
 	return (
 		<>
 			<head>
-				<Header />
+				<Head />
 			</head>
 			<body>
 				<main>

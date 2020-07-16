@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/Header';
+import Head from '../components/Header';
 import Footer from '../components/Footer';
 import { css } from '@emotion/core';
 import Navbar from '../components/Navbar';
@@ -11,7 +11,7 @@ function patientList({patients}){
     return(
         <>
             <head>
-                <Header/>
+                <Head/>
             </head>
             <body>
                 <div>
@@ -34,19 +34,19 @@ function patientList({patients}){
                                                     <th align="center" css={css`text-align:"center"; font-size:14px; `} colSpan="2">ID : {s.id}</th>
                                                 </tr>
                                             </thead>
-                                            <table className ="table table-condensed table-bordered clearfix" css = {css ` width:90%; margin-top: 25px; margin-bottom:10px;`} allign = "center">
+                                            <table className ="table table-condensed table-bordered" css = {css ` width:90%; margin-top: 25px; margin-bottom:10px;`} allign = "center">
+                                                <tbody>
                                                 {Object.keys(s.clinical_information).map((item,i) => (
-                                                    <>
-                                                        <tbody>
-                                                            <td>
-                                                                <th className="table-striped" css={css`background-color: rgba(235, 105, 9, 0.65);`}>
-                                                                    <td className="col-lg-6" css = {css ` text-align:center;`}>{item}</td>
-                                                                    <td className="col-lg-6"  css = {css`text-align:center; background-color:#fff;`}>{s.clinical_information[item]}</td>
-                                                                </th>
-                                                            </td>
-                                                        </tbody>
-                                                    </>
+                                                        
+                                                    <tr>
+
+                                                        <td className="col-md-2" css = {css ` text-align:center; background-color:rgba(235, 105, 9, 0.65);`}>{item}</td>
+                                                        <td className="col-md-6"  css = {css`text-align:left; background-color:#fff;`}>{s.clinical_information[item]}</td>
+
+                                                    </tr>
+                                                        
                                                 ))}
+                                                </tbody>
                                             </table>
                                         </table>
                                     )})
@@ -70,7 +70,7 @@ export async function getStaticProps() {
     // You can use any data fetching library
     const res = await fetch(`${CONSTANTS.API.url}/api/v2/patient/all`, {
         method: "GET",
-        headers: {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYW51ZWwiLCJleHAiOjE1OTQ2NDUwNTN9.Fy8ApdKnYSALFcLN5N_byQYBRDyAFUGEg1Qznpxo99Y"}
+        headers: {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYW51ZWwiLCJleHAiOjE1OTQ4MTAxMDV9.ymXYgiPh4xZ7VSayZf-Ep-_sSjUyA_v5HHv-aOsjyGA"}
     });
     
 

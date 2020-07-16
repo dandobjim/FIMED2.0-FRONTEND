@@ -1,6 +1,6 @@
 import React from 'react'
 import Form from '../components/Form'
-import Header from '../components/Header'
+import Head from '../components/Head'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import LogoContainer from "../components/Logo";
@@ -10,7 +10,7 @@ const formDesign = () => {
     return (
         <> 
         <head>
-            <Header/>
+            <Head/>
         </head>
         <body>
             <div>
@@ -21,7 +21,7 @@ const formDesign = () => {
                 <div className="container">
                     <div className="panel panel-default">
                         <div className=" panel-body">
-                            <div className= "page-header" css={css` margin-top:0px; `}>
+                            <div className= "page-Head" css={css` margin-top:0px; `}>
                                 <LogoContainer/>
                             </div>
                             <Form/>
