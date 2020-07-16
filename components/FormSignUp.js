@@ -5,35 +5,53 @@ import Link from 'next/link';
 
 const FormSignUp = () => {
     
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({fullname:"",});
+
+    const handleChange = e => {
+       setData({...data, [e.target.name]: e.target.value});
+    }
 
     const handleSubmit = e => {
         e.preventDefault();
-    
+        //validation 
+
+
         fetch(`${CONSTANTS.API.url}/api/v2/auth/register`, {
           method: 'post',
           headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ data: data})
+          body: JSON.stringify(data)
         }).then((res) => {
-          console.log(res)
-        })
+            if (!res.ok) {
+              throw res;
+            }
+            return res.json();
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(`Error ${err.status}`);
+            err.json().then(data => { data.detail.map((item,index) => {alert(item.msg)}) });
+          });
+          
     }
     
     const prueba = e => {
-        console.log(e)
+        e.preventDefault();
+        console.log(data)
     }
 
     return(
         <>
-            <form id="login" method="post" enctype="multipart/form-data" acceptcharset="UTF-8" onSubmit={prueba}>
+            <form id="login" method="post" enctype="multipart/form-data" acceptcharset="UTF-8" onSubmit={handleSubmit} onChange={handleChange}>
                 
                 <div className="form-group">
                     <label for="name" className="col-sm-2 control-label">Name</label>
                     <div className="col-sm-10">
-                        <input type="text" className="form-control" id="name" name="name" required/>
+                        <input type="text" className="form-control" id="name" name="fullname" required/>
                     </div>
                 </div>
                 <br />
