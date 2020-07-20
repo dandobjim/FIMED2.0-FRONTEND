@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const FormSignUp = () => {
     
-    const [data, setData] = useState({fullname:"",});
+    const [data, setData] = useState({username: "", fullname: "", email: "", password: ""});
 
     const handleChange = e => {
        setData({...data, [e.target.name]: e.target.value});
@@ -27,6 +27,7 @@ const FormSignUp = () => {
             if (!res.ok) {
               throw res;
             }
+            alert("User created satisfactory")
             return res.json();
           })
           .then((res) => {
@@ -46,7 +47,7 @@ const FormSignUp = () => {
 
     return(
         <>
-            <form id="login" method="post" enctype="multipart/form-data" acceptcharset="UTF-8" onSubmit={handleSubmit} onChange={handleChange}>
+            <form id="sign-up" method="post" encType="multipart/form-data" acceptCharset="UTF-8" onSubmit={handleSubmit} onChange={handleChange}>
                 
                 <div className="form-group">
                     <label for="name" className="col-sm-2 control-label">Name</label>
