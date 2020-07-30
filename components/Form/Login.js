@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {css} from '@emotion/core';
-import {CONSTANTS} from "../shared/Constants";
+import {CONSTANTS} from "../../shared/Constants";
 import Link from 'next/link';
 import Router from 'next/router';
+import Cookies from 'js-cookie';
 
-const FormLogin = () =>{
+const Login = () =>{
 
     const [user, setUser] = useState({username:"", password:""})
 
@@ -30,9 +31,10 @@ const FormLogin = () =>{
             if(!res.ok){
                 throw res;
             }
+            
             return res.json();
         }).then((res) => {
-
+            Cookies.set("fimedtk",res.access_token)
             Router.push("/home")
         }).catch((err) => {
             console.log(`Error ${err.status}`);
@@ -46,10 +48,6 @@ const FormLogin = () =>{
         });
     }
 
-    const prueba = e => {
-        e.preventDefault();
-        console.log(user);
-    }
 
     return(
         <>
@@ -80,4 +78,4 @@ const FormLogin = () =>{
 }
 
 
-export default FormLogin;
+export default Login;

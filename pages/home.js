@@ -4,9 +4,13 @@ import Head from '../components/Head';
 import Footer from '../components/Footer';
 import { css } from '@emotion/core';
 import Link from 'next/link';
+import {useUser} from '../lib/hooks/useUser';
+
 
 
 const Home = () => {
+	//const user = useUser({redirectTo: '/'})
+
 	return (
 		<>
 			<head>
@@ -19,7 +23,9 @@ const Home = () => {
 						<div className="panel panel-default">
 							<div className="panel-body">
 								<div className="page-header" css={css`margin-top: 0px;`}>
-									<h1>Add or search a patient (s):</h1>
+									<Link href = "/patientList">
+										<h1>Add or search a patient (s):</h1>
+									</Link>
 								</div>
 								<form>
 									<div className="row">

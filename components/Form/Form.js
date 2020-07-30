@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
-import {CONSTANTS} from "../shared/Constants";
+import {CONSTANTS} from "../../shared/Constants";
+import Cookies from 'js-cookie';
+import cookies from 'next-cookies';
 
 
 const DEFAULT_SELECTION = "String";
 
 
 const Form = () => {
+  const cookie = Cookies.get("fimedtk");
+
   const [rows, setRows] = useState([]);
 
   const incrRow = () => {
@@ -27,7 +31,7 @@ const Form = () => {
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYW51ZWwiLCJleHAiOjE1OTQ4MTAxMDV9.ymXYgiPh4xZ7VSayZf-Ep-_sSjUyA_v5HHv-aOsjyGA'
+        'Authorization': `Bearer ${cookie}`
       },
       body: JSON.stringify({ rows: rows })
     }).then((res) => {
@@ -37,10 +41,6 @@ const Form = () => {
 
   return (
     <>
-      <button className="btn-sm btn-primary button-field" onClick={incrRow}>
-        Add row
-      </button>
-
       <form onSubmit={handleSubmit} onChange={handleChange}>
         {
           rows.map((item, index) => {

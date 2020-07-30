@@ -1,13 +1,19 @@
 import React from 'react';
-import Head from '../components/Header';
+import Head from '../components/Head';
 import Footer from '../components/Footer';
 import { css } from '@emotion/core';
 import Navbar from '../components/Navbar';
 import fetch from 'node-fetch';
 import {CONSTANTS} from "../shared/Constants";
 import LogoContainer from "../components/Logo";
+import Link from "next/link";
+import Cookies from 'js-cookie';
+
 
 function patientList({patients}){
+
+    
+
     return(
         <>
             <head>
@@ -32,6 +38,12 @@ function patientList({patients}){
                                             <thead>
                                                 <tr>
                                                     <th align="center" css={css`text-align:"center"; font-size:14px; `} colSpan="2">ID : {s.id}</th>
+                                                    <Link href= {`updatePatient/${s.id}`}>
+                                                        <a className="glyphicon glyphicon-pencil" css={css`margin-top:1rem; color:black;position:relative; left:1rem;`}></a>
+                                                    </Link>
+                                                    <Link href="/">
+                                                        <a className="glyphicon glyphicon-remove" css={css`margin-top:1rem; color:black; position:relative; left:1rem; margin-left:1rem;`}></a>
+                                                    </Link>
                                                 </tr>
                                             </thead>
                                             <table className ="table table-condensed table-bordered" css = {css ` width:90%; margin-top: 25px; margin-bottom:10px;`} allign = "center">
@@ -68,14 +80,16 @@ function patientList({patients}){
 export async function getStaticProps() {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
+    //get cookie
+    const cookie = Cookies.get("fimedtk");
     const res = await fetch(`${CONSTANTS.API.url}/api/v2/patient/all`, {
         method: "GET",
-        headers: {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYW51ZWwiLCJleHAiOjE1OTQ4MTAxMDV9.ymXYgiPh4xZ7VSayZf-Ep-_sSjUyA_v5HHv-aOsjyGA"}
+        headers: {"Authorization": "Bearer " + {cookie}}
     });
     
-
+    console.log(cookie)
     const patients = await res.json();
-    //console.log(patients)
+    console.log(patients)
     return {
         props: {
             patients,

@@ -1,5 +1,5 @@
 import React from 'react';
-import Nav_loging from './Nav_loging';
+import Nav_loging from './NavLoging';
 import Link from 'next/link';
 
 const Header_loging = () => {

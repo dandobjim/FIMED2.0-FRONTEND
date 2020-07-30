@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Link from 'next/link';
 import Head from '../components/Head';
 import LogoContainer from '../components/Logo';
-import FormLogin from '../components/FormLogin';
+import Login from '../components/Form/Login';
 
 const Logging = () => {
   return (
@@ -21,7 +21,7 @@ const Logging = () => {
                   <LogoContainer />
                   <h2>Login Page:</h2>
                 </div>
-                <FormLogin/>
+                <Login/>
                 <div className="form-group">
                   <label for="register" className="col-sm-2 control-label" >Sign up:</label>
                   <Link href="/signup">

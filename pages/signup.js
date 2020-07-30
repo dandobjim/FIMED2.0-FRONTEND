@@ -3,7 +3,7 @@ import { css } from '@emotion/core';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
 import LogoContainer from '../components/Logo';
-import FormSignUp from '../components/FormSignUp';
+import FormSignUp from '../components/Form/SignUp';
 
 
 class Signup extends Component{

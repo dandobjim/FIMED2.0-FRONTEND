@@ -1,5 +1,5 @@
 import React from 'react'
-import Form from '../components/Form'
+import Form from '../components/Form/Form'
 import Head from '../components/Head'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
