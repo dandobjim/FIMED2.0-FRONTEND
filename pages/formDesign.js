@@ -5,8 +5,12 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import LogoContainer from "../components/Logo";
 import {css} from '@emotion/core';
+import {useUser} from '../lib/hooks/useUser';
+
 
 const formDesign = () => {
+    const user = useUser({redirectTo: '/'})
+
     return (
         <> 
         <head>

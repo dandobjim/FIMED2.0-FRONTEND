@@ -7,12 +7,12 @@ import fetch from 'node-fetch';
 import {CONSTANTS} from "../shared/Constants";
 import LogoContainer from "../components/Logo";
 import Link from "next/link";
-import Cookies from 'js-cookie';
+import {useUser} from '../lib/hooks/useUser';
 
 
 function patientList({patients}){
+    const user = useUser({redirectTo: '/'})
 
-    
 
     return(
         <>
@@ -81,15 +81,14 @@ export async function getStaticProps() {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
     //get cookie
-    const cookie = Cookies.get("fimedtk");
     const res = await fetch(`${CONSTANTS.API.url}/api/v2/patient/all`, {
         method: "GET",
-        headers: {"Authorization": "Bearer " + {cookie}}
+        headers: {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYW51ZWwiLCJleHAiOjE1OTYxMTAzNzF9.lfNFK-aRlvsRBrxfbTlRuCrPFlTh6Cf72Lh8OH3hX74"}
     });
     
-    console.log(cookie)
+
     const patients = await res.json();
-    console.log(patients)
+    //console.log(patients)
     return {
         props: {
             patients,

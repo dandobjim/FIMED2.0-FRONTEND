@@ -9,7 +9,7 @@ import {useUser} from '../lib/hooks/useUser';
 
 
 const Home = () => {
-	//const user = useUser({redirectTo: '/'})
+	const user = useUser({redirectTo: '/'})
 
 	return (
 		<>

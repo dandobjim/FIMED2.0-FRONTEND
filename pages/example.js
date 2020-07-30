@@ -1,8 +1,10 @@
 import {CONSTANTS} from "../shared/Constants";
 import Cookies from "js-cookie";
+import cookies from 'next-cookies';
 
-function Example({patients}) {
-    const cookie = Cookies.get("fimedtk")
+function Example() {
+    const { cookie } = cookies(fimedtk);
+    console.log(ctx)
     return (
         <p>
             Bearer {cookie}

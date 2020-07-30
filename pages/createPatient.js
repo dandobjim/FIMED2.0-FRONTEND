@@ -7,9 +7,12 @@ import Navbar from '../components/Navbar';
 import {CONSTANTS} from "../shared/Constants";
 import fetch from 'node-fetch';
 import Cookies from 'js-cookie';
+import {useUser} from '../lib/hooks/useUser';
 
 
 const createPatient = ({form}) => {
+	const user = useUser({redirectTo: '/'})
+
 	const cookie = Cookies.get("fimedtk");
 	
 	const [patients, setPatient] = useState({});
@@ -107,7 +110,7 @@ export async function getStaticProps() {
     // You can use any data fetching library
     const res = await fetch(`${CONSTANTS.API.url}/api/v2/form/see_form`, {
         method: "GET",
-        headers: {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYW51ZWwiLCJleHAiOjE1OTU4NDEzMTl9.LiihCnd14osWAO-HG0HOZXkVRIkvFmeXdj4drLDzc_M"}
+        headers: {"Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVIiwiZXhwIjoxNTk2MTEzNjM5fQ.wPfwoRrKgaf_sY8DpZyfdVkmoU7Ldzbu0g1fprWIeaU"}
     });
     
 

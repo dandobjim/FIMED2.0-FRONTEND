@@ -3,7 +3,7 @@ import { css } from '@emotion/core';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
 import LogoContainer from '../components/Logo';
-import FormSignUp from '../components/Form/SignUp';
+import SignUp from '../components/Form/SignUp';
 
 
 class Signup extends Component{
@@ -32,7 +32,7 @@ class Signup extends Component{
 									<LogoContainer/>
 									<h2>Registration Page</h2>
 								</div>
-								<FormSignUp/>
+								<SignUp/>
 							</div>
 						</div>
 					</div>

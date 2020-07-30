@@ -52,7 +52,7 @@ const Login = () =>{
     return(
         <>
         <form id="login" method="post" encType="multipart/form-data" acceptCharset ="UTF-8" onChange={handleChange} onSubmit={handleSubmit}>
-            <div class="form-group">
+            <div className="form-group">
                 <label for="username" className="col-sm-2 control-label">Username</label>
                 <div className="col-sm-10">
                     <input type="text" className="form-control" id="username" name="username" />

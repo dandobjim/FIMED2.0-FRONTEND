@@ -36,6 +36,7 @@ const Form = () => {
       body: JSON.stringify({ rows: rows })
     }).then((res) => {
       console.log(res)
+      alert("form created satisfactory")
     })
   }
 

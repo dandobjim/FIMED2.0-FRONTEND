@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {CONSTANTS} from "../shared/Constants";
+import {CONSTANTS} from "../../shared/Constants";
 import {css} from "@emotion/core";
 import Link from 'next/link';
 
