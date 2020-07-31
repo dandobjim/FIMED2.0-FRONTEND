@@ -89,9 +89,17 @@ const createPatient = ({ form }) => {
                       <table className="table table-condensed table-striped">
                         {form.rows.map((s, index) => {
                           return (
-                            <div className="form-group" key={index}>
-                              <label className="control-label">{s.name}</label>
-                              <input type={s.rtype} name={s.name}></input>
+                            <div className="row" key={index}>
+                              <div className="col-md-6 col-md">
+                                <label className="control-label">
+                                  {s.name}
+                                </label>
+                                <input
+                                  className="form-control"
+                                  type={s.rtype}
+                                  name={s.name}
+                                ></input>
+                              </div>
                             </div>
                           );
                         })}
