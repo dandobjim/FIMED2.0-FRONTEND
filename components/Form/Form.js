@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { CONSTANTS } from "../../shared/Constants";
 import Cookies from "js-cookie";
 import cookies from "next-cookies";
+import Link from "next/link";
+import { css } from "@emotion/core";
+import Router from "next/router";
+import fetch from "node-fetch";
 
 const DEFAULT_SELECTION = "String";
 
@@ -12,6 +16,12 @@ const Form = () => {
 
   const incrRow = () => {
     setRows([...rows, { name: "", rtype: DEFAULT_SELECTION }]);
+  };
+
+  const delRow = () => {
+    const tmpRows = rows;
+    tmpRows.pop();
+    setRows([...tmpRows]);
   };
 
   const handleChange = (e) => {
@@ -34,13 +44,18 @@ const Form = () => {
       body: JSON.stringify({ rows: rows }),
     }).then((res) => {
       console.log(res);
-      alert("form created satisfactory");
+      alert("Form created satisfactory, redirect to home page");
+      Router.push("/home");
     });
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit} onChange={handleChange}>
+      <form
+        onSubmit={handleSubmit}
+        onChange={handleChange}
+        encType="multipart/form-data"
+      >
         {rows.map((item, index) => {
           return (
             <div className="row" key={index}>
@@ -69,6 +84,7 @@ const Form = () => {
                     <option value="Boolean">Boolean</option>
                     <option value="Textarea">textarea</option>
                   </select>
+                  <br />
                   <hr />
                 </div>
               </div>
@@ -85,8 +101,12 @@ const Form = () => {
       <button className="btn-sm btn-primary button-field" onClick={incrRow}>
         Add row
       </button>
+      <button className="btn-sm btn-primary button-field" onClick={delRow}>
+        Delete Row
+      </button>
     </>
   );
 };
+//};
 
 export default Form;

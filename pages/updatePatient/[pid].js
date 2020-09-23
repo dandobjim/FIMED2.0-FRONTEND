@@ -6,6 +6,8 @@ import LogoContainer from "../../components/Logo";
 import Navbar from "../../components/Navbar";
 import { CONSTANTS } from "../../shared/Constants";
 import fetch from "node-fetch";
+import Cookies from "js-cookie";
+import cookies from "next-cookies";
 
 const updatePatient = ({ form }) => {
   return (
@@ -54,13 +56,14 @@ const updatePatient = ({ form }) => {
 export async function getServerSideProps(ctx) {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
+  const allCookies = cookies(ctx);
   const res = await fetch(
     `${CONSTANTS.API.url}/api/v2/patient/search_by_patient_id?id_patient=${ctx.params.pid}`,
     {
       method: "GET",
       headers: {
         Authorization:
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYW51ZWwiLCJleHAiOjE1OTYwMTkwNDZ9.FUi9SxM9Iu1x7kBDSCLYCYtErYBBvzucy-uUTlbA3LM",
+          `Bearer ${allCookies.fimedtk}`
       },
     }
   );

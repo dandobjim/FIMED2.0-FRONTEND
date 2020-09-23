@@ -67,7 +67,7 @@ const Login = () => {
         onSubmit={handleSubmit}
       >
         <div className="form-group">
-          <label for="username" className="col-sm-2 control-label">
+          <label htmlFor="username" className="col-sm-2 control-label">
             Username
           </label>
           <div className="col-sm-10">
@@ -80,11 +80,11 @@ const Login = () => {
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="password" className="col-sm-2 control-label">
+        <div className="form-group">
+          <label htmlFor="password" className="col-sm-2 control-label">
             Password
           </label>
-          <div class="col-sm-10">
+          <div className="col-sm-10">
             <input
               type="password"
               className="form-control"
@@ -95,7 +95,7 @@ const Login = () => {
         </div>
 
         <div className="form-group">
-          <label for="validate" className="col-sm-2 control-label">
+          <label htmlFor="validate" className="col-sm-2 control-label">
             Sign In:
           </label>
           <button

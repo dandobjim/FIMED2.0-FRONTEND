@@ -6,6 +6,7 @@ import Head from "../components/Head";
 import LogoContainer from "../components/Logo";
 import Login from "../components/Form/Login";
 
+
 const Logging = () => {
   return (
     <>
@@ -28,7 +29,7 @@ const Logging = () => {
                 </div>
                 <Login />
                 <div className="form-group">
-                  <label for="register" className="col-sm-2 control-label">
+                  <label htmlFor="register" className="col-sm-2 control-label">
                     Sign up:
                   </label>
                   <Link href="/signup">

@@ -38,81 +38,83 @@ function patientList({ patients }) {
                 </div>
                 {patients.map((s, index) => {
                   return (
-                    <table className="table table-condensed table-striped">
-                      <thead>
-                        <tr>
-                          <th
-                            align="center"
-                            css={css`
-                              text-align: "center";
-                              font-size: 14px;
-                            `}
-                            colSpan="2"
-                          >
-                            ID : {s.id}
-                          </th>
-                          <Link href={`updatePatient/${s.id}`}>
-                            <a
-                              className="glyphicon glyphicon-pencil"
+                    <div>
+                      <table className="table table-condensed table-striped">
+                        <thead>
+                          <tr>
+                            <th
+                              align="center"
                               css={css`
-                                margin-top: 1rem;
-                                color: black;
-                                position: relative;
-                                left: 1rem;
+                                text-align: "center";
+                                font-size: 14px;
                               `}
-                            ></a>
-                          </Link>
-                          <Link href="/">
-                            <a
-                              className="glyphicon glyphicon-remove"
-                              css={css`
-                                margin-top: 1rem;
-                                color: black;
-                                position: relative;
-                                left: 1rem;
-                                margin-left: 1rem;
-                              `}
-                            ></a>
-                          </Link>
-                        </tr>
-                      </thead>
-                      <table
-                        className="table table-condensed table-bordered"
-                        css={css`
-                          width: 90%;
-                          margin-top: 25px;
-                          margin-bottom: 10px;
-                        `}
-                        allign="center"
-                      >
-                        <tbody>
-                          {Object.keys(s.clinical_information).map(
-                            (item, i) => (
-                              <tr>
-                                <td
-                                  className="col-md-2"
-                                  css={css`
-                                    text-align: center;
-                                    background-color: rgba(235, 105, 9, 0.65);
-                                  `}
-                                >
-                                  {item}
-                                </td>
-                                <td
-                                  className="col-md-6"
-                                  css={css`
-                                    text-align: left;
-                                    background-color: #fff;
-                                  `}
-                                >
-                                  {s.clinical_information[item]}
-                                </td>
-                              </tr>
-                            )
-                          )}
-                        </tbody>
+                              colSpan="2"
+                            >
+                              ID : {s.id}
+                            </th>
+                            <Link href={`updatePatient/${s.id}`}>
+                              <a
+                                className="glyphicon glyphicon-pencil"
+                                css={css`
+                                  margin-top: 1rem;
+                                  color: black;
+                                  position: relative;
+                                  left: 1rem;
+                                `}
+                              ></a>
+                            </Link>
+                            <Link href="/">
+                              <a
+                                className="glyphicon glyphicon-remove"
+                                css={css`
+                                  margin-top: 1rem;
+                                  color: black;
+                                  position: relative;
+                                  left: 1rem;
+                                  margin-left: 1rem;
+                                `}
+                              ></a>
+                            </Link>
+                          </tr>
+                        </thead>
+                        <table
+                          className="table table-condensed table-bordered"
+                          css={css`
+                            width: 90%;
+                            margin-top: 25px;
+                            margin-bottom: 10px;
+                          `}
+                          allign="center"
+                        >
+                          <tbody>
+                            {Object.keys(s.clinical_information).map(
+                              (item, i) => (
+                                <tr>
+                                  <td
+                                    className="col-md-2"
+                                    css={css`
+                                      text-align: center;
+                                      background-color: rgba(235, 105, 9, 0.65);
+                                    `}
+                                  >
+                                    {item}
+                                  </td>
+                                  <td
+                                    className="col-md-6"
+                                    css={css`
+                                      text-align: left;
+                                      background-color: #fff;
+                                    `}
+                                  >
+                                    {s.clinical_information[item]}
+                                  </td>
+                                </tr>
+                              )
+                            )}
+                          </tbody>
+                        </table>
                       </table>
-                    </table>
+                    </div>
                   );
                 })}
               </div>
@@ -130,7 +132,6 @@ export async function getServerSideProps(ctx) {
   // You can use any data fetching library
   //get cookie
   const allCookies = cookies(ctx);
-  console.log(allCookies.fimedtk);
   const res = await fetch(`${CONSTANTS.API.url}/api/v2/patient/all`, {
     method: "GET",
     headers: { Authorization: `Bearer ${allCookies.fimedtk}` },

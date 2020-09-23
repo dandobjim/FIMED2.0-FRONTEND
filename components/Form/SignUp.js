@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CONSTANTS } from "../../shared/Constants";
 import { css } from "@emotion/core";
 import Link from "next/link";
+import Router from "next/router";
 
 const FormSignUp = () => {
   const [data, setData] = useState({
@@ -31,11 +32,11 @@ const FormSignUp = () => {
         if (!res.ok) {
           throw res;
         }
-        alert("User created satisfactory");
+        alert("User created satisfactory, redirecting to login page");
         return res.json();
       })
       .then((res) => {
-        console.log(res);
+        Router.push("/")
       })
       .catch((err) => {
         console.log(`Error ${err.status}`);
@@ -63,7 +64,7 @@ const FormSignUp = () => {
         onChange={handleChange}
       >
         <div className="form-group">
-          <label for="name" className="col-sm-2 control-label">
+          <label htmlFor="name" className="col-sm-2 control-label">
             Name
           </label>
           <div className="col-sm-10">
