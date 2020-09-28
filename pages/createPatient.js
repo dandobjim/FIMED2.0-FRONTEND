@@ -20,7 +20,7 @@ const createPatient = ({ form }) => {
   const [patients, setPatient] = useState({});
 
   const handleChange = (e) => {
-    setPatient({ ...patients, [e.target.name]: e.target.value });
+    setPatient({ ...patients ,[e.target.name]: e.target.value, [e.target.type]: e.target.type});
   };
 
   const handleSubmit = (e) => {
@@ -32,7 +32,7 @@ const createPatient = ({ form }) => {
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
-        patient_data: { patients },
+        patient_data: { patients: patients},
         Authorization: `Bearer ${cookie}`,
       },
       body: JSON.stringify(patients),
@@ -101,6 +101,12 @@ const createPatient = ({ form }) => {
                                     className="form-control"
                                     type={s.rtype}
                                     name={s.name}
+                                  ></input>
+                                  <input
+                                    className="form-control"
+                                    type="hidden"
+                                    name={s.rtype}
+                                    value={s.rtype}
                                   ></input>
                                 </div>
                               </div>

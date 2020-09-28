@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Head from "../components/Head";
 import Footer from "../components/Footer";
 import { css } from "@emotion/core";
@@ -13,7 +13,10 @@ import cookies from "next-cookies";
 
 function patientList({ patients }) {
   const user = useUser({ redirectTo: "/" });
-
+  useState(patients)
+  
+  const [patient, usePatient] = useState(patients);
+  console.log(patient)
   return (
     <>
       <head>
@@ -36,9 +39,11 @@ function patientList({ patients }) {
                   <LogoContainer />
                   <h2>Patient List</h2>
                 </div>
-                {patients.map((s, index) => {
+                
+                  {patient.map((s, index) => {
                   return (
-                    <div>
+                    <form onSubmit={handleSubmit}>
+                      <div key={index}>
                       <table className="table table-condensed table-striped">
                         <thead>
                           <tr>
@@ -63,9 +68,10 @@ function patientList({ patients }) {
                                 `}
                               ></a>
                             </Link>
-                            <Link href="/">
-                              <a
+                            
+                              <button
                                 className="glyphicon glyphicon-remove"
+                                type="submit"
                                 css={css`
                                   margin-top: 1rem;
                                   color: black;
@@ -73,8 +79,8 @@ function patientList({ patients }) {
                                   left: 1rem;
                                   margin-left: 1rem;
                                 `}
-                              ></a>
-                            </Link>
+                              ></button>
+                            
                           </tr>
                         </thead>
                         <table
@@ -115,8 +121,11 @@ function patientList({ patients }) {
                         </table>
                       </table>
                     </div>
+                    </form>
+                    
                   );
                 })}
+                
               </div>
             </div>
           </div>
@@ -137,7 +146,8 @@ export async function getServerSideProps(ctx) {
     headers: { Authorization: `Bearer ${allCookies.fimedtk}` },
   });
 
-  const patients = await res.json();
+  var patients = await res.json();
+  {patients == [] ? patients = []: null}
   //console.log(patients)
   return {
     props: {

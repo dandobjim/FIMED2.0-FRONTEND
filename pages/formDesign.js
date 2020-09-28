@@ -17,8 +17,9 @@ const formDesign = ({ form_row }) => {
   const user = useUser({ redirectTo: "/" });
 
   const cookie = Cookies.get("fimedtk");
+  useState(form_row);
 
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState(form_row);
 
   const incrRow = () => {
     setRows([...rows, { name: "", rtype: DEFAULT_SELECTION }]);
@@ -31,6 +32,7 @@ const formDesign = ({ form_row }) => {
   };
 
   const handleChange = (e) => {
+    console.log(e.target);
     const _rows = [...rows];
     _rows[e.target.dataset.id][e.target.name] = e.target.value;
 
@@ -84,80 +86,44 @@ const formDesign = ({ form_row }) => {
                   onChange={handleChange}
                   encType="multipart/form-data"
                 >
-                  {!form_row ? (
-                    rows.map((item, index) => {
-                      return (
-                        <div className="row" key={index}>
-                          <div className="col-md-6 col-md">
-                            <label className="control-label">{`Name #${
-                              index + 1
-                            }: `}</label>
-                            <input
+                  {rows.map((s, index) => {
+                    return (
+                      <div className="row" key={index}>
+                        <div className="col-md-6 col-md">
+                          <label className="control-label">{`Name #${
+                            index + 1
+                          }: `}</label>
+                          
+                          <input
+                            className="form-control"
+                            data-id={index}
+                            name="name"
+                            type="text"
+                            value={s.name}
+                          />
+
+                          
+                          <div className="form-group">
+                            <label className="control-label">Type:</label>
+                            <select
                               className="form-control"
                               data-id={index}
-                              name="name"
-                              type="text"
-                            />
-
-                            <div className="form-group">
-                              <label className="control-label">Type:</label>
-                              <select
-                                className="form-control"
-                                data-id={index}
-                                name="rtype"
-                                defaultValue="String"
-                              >
-                                <option value="String">String</option>
-                                <option value="Integer">Number</option>
-                                <option value="Date">Date</option>
-                                <option value="Boolean">Boolean</option>
-                                <option value="Textarea">textarea</option>
-                              </select>
-                              <br />
-                              <hr />
-                            </div>
+                              name="rtype"
+                              defaultValue={s.rtype}
+                            >
+                              <option value="String">String</option>
+                              <option value="Integer">Number</option>
+                              <option value="Date">Date</option>
+                              <option value="Boolean">Boolean</option>
+                              <option value="Textarea">textarea</option>
+                            </select>
+                            <br />
+                            <hr />
                           </div>
                         </div>
-                      );
-                    })
-                  ) : (
-                    form_row.map((s,index) => {
-                      return (
-                        <div className="row" key={index}>
-                          <div className="col-md-6 col-md">
-                            <label className="control-label">{`Name #${
-                              index + 1
-                            }: `}</label>
-                            <input
-                              className="form-control"
-                              data-id={index}
-                              name="name"
-                              type="text"
-                              value={s.name}
-                            />
-
-                            <div className="form-group">
-                              <label className="control-label">Type:</label>
-                              <select
-                                className="form-control"
-                                data-id={index}
-                                name="rtype"
-                                defaultValue= {s.rtype}
-                              >
-                                <option value="String">String</option>
-                                <option value="Integer">Number</option>
-                                <option value="Date">Date</option>
-                                <option value="Boolean">Boolean</option>
-                                <option value="Textarea">textarea</option>
-                              </select>
-                              <br />
-                              <hr />
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })
-                  )}
+                      </div>
+                    );
+                  })}
 
                   <input
                     type="submit"
@@ -197,7 +163,10 @@ export async function getServerSideProps(ctx) {
     headers: { Authorization: `Bearer ${allCookies.fimedtk}` },
   });
 
-  const form_row = await res.json();
+  var form_row = await res.json();
+  {
+    form_row == null ? (form_row = []) : null;
+  }
   return {
     props: {
       form_row,
