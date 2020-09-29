@@ -8,8 +8,60 @@ import { CONSTANTS } from "../../shared/Constants";
 import fetch from "node-fetch";
 import Cookies from "js-cookie";
 import cookies from "next-cookies";
+import { useUser } from "../../lib/hooks/useUser";
 
-const updatePatient = ({ form }) => {
+const updatePatient = ({ form, ID }) => {
+  const user = useUser({ redirectTo: "/" });
+  const cookie = Cookies.get("fimedtk");
+
+  const [patient, setPatient] = useState(form);
+
+  const handleChange = (e) => {
+    setPatient({
+      ...patient,
+      [e.target.name]: e.target.value,
+      [e.target.type]: e.target.type,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //validation
+
+    fetch(`${CONSTANTS.API.url}/api/v2/patient/update/${ID} `, {
+      method: "post",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        patient_data: { patient: patient },
+        Authorization: `Bearer ${cookie}`,
+      },
+      body: JSON.stringify(patient),
+    })
+      .then((res) => {
+        //console.log(patients);
+        if (!res.ok) {
+          throw res;
+        }
+        alert("Patient created satisfactory");
+        return res.json();
+      })
+      .then((res) => {
+        console.log(res);
+        window.location.reload(false);
+        //Router.push("/createPatient");
+      })
+      .catch((err) => {
+        console.log(`Error ${err.status}`);
+        console.log(patients);
+        err.json().then((patients) => {
+          patients.detail.map((item, index) => {
+            alert(item.msg);
+          });
+        });
+      });
+  };
+
   return (
     <>
       <head>
@@ -33,13 +85,35 @@ const updatePatient = ({ form }) => {
                   <hr />
                   <div>
                     <form
-                      id="update-patient"
-                      method="post"
+                      onChange={handleChange}
+                      onSubmit={handleSubmit}
                       encType="multipart/form-data"
                     >
-                      {form.map((s, index) => {
-                        console.log(s.clinical_information);
+                      {Object.entries(patient).map(([key, value], index) => {
+                        return (
+                          <div className="row" key={index}>
+                            <div className="col-md-6 col-md">
+                              <label className="control-label">{key}</label>
+                              <input
+                                className="form-control"
+                                name={key}
+                                value={value}
+                              ></input>
+                            </div>
+                          </div>
+                        );
                       })}
+
+                      <div className="col-sm-offset-2 col-sm-10">
+                        <input
+                          type="submit"
+                          className="btn-sm btn-primary button-field"
+                          css={css`
+                            margin-top: 7px;
+                          `}
+                          value="Update Patient"
+                        />
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -62,18 +136,17 @@ export async function getServerSideProps(ctx) {
     {
       method: "GET",
       headers: {
-        Authorization:
-          `Bearer ${allCookies.fimedtk}`
+        Authorization: `Bearer ${allCookies.fimedtk}`,
       },
     }
   );
 
+  const ID = ctx.params.pid
   const form = await res.json();
-  console.log(form);
-  // console.log(form.clinical_information)
   return {
     props: {
       form,
+      ID,
     },
   };
 }

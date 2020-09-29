@@ -32,10 +32,9 @@ const formDesign = ({ form_row }) => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target);
+    
     const _rows = [...rows];
     _rows[e.target.dataset.id][e.target.name] = e.target.value;
-
     setRows(_rows);
   };
 
@@ -52,7 +51,7 @@ const formDesign = ({ form_row }) => {
       body: JSON.stringify({ rows: rows }),
     }).then((res) => {
       //console.log(res);
-      alert("Form created satisfactory, redirect to home page");
+      alert("Form created satisfactory, redirecting to home page");
       Router.push("/home");
     });
   };
@@ -111,11 +110,10 @@ const formDesign = ({ form_row }) => {
                               name="rtype"
                               defaultValue={s.rtype}
                             >
-                              <option value="String">String</option>
-                              <option value="Integer">Number</option>
-                              <option value="Date">Date</option>
-                              <option value="Boolean">Boolean</option>
-                              <option value="Textarea">textarea</option>
+                              <option value="text">String</option>
+                              <option value="number">Number</option>
+                              <option value="date">Date</option>
+                              <option value="checkbox">Boolean</option>
                             </select>
                             <br />
                             <hr />

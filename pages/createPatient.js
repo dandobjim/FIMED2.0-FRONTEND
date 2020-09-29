@@ -11,6 +11,7 @@ import { useUser } from "../lib/hooks/useUser";
 import cookies from "next-cookies";
 import Router from "next/router";
 import Link from "next/link";
+import { render } from "react-dom";
 
 const createPatient = ({ form }) => {
   const user = useUser({ redirectTo: "/" });
@@ -20,7 +21,13 @@ const createPatient = ({ form }) => {
   const [patients, setPatient] = useState({});
 
   const handleChange = (e) => {
-    setPatient({ ...patients ,[e.target.name]: e.target.value, [e.target.type]: e.target.type});
+    setPatient({
+      ...patients,
+      [e.target.name]: e.target.value
+      
+      
+    });
+    console.log(patients);
   };
 
   const handleSubmit = (e) => {
@@ -32,13 +39,13 @@ const createPatient = ({ form }) => {
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
-        patient_data: { patients: patients},
+        patient_data: { patients: patients },
         Authorization: `Bearer ${cookie}`,
       },
-      body: JSON.stringify(patients),
+      body: patients,
     })
       .then((res) => {
-        console.log(patients);
+        //console.log(patients);
         if (!res.ok) {
           throw res;
         }
@@ -46,8 +53,8 @@ const createPatient = ({ form }) => {
         return res.json();
       })
       .then((res) => {
-        console.log(res);
-        Router.push("/home");
+        window.location.reload(false);
+        //Router.push("/createPatient");
       })
       .catch((err) => {
         console.log(`Error ${err.status}`);
@@ -89,7 +96,7 @@ const createPatient = ({ form }) => {
                         onSubmit={handleSubmit}
                         onChange={handleChange}
                       >
-                        <table className="table table-condensed table-striped">
+                        <form>
                           {form.map((s, index) => {
                             return (
                               <div className="row" key={index}>
@@ -97,22 +104,19 @@ const createPatient = ({ form }) => {
                                   <label className="control-label">
                                     {s.name}
                                   </label>
+                                  
                                   <input
                                     className="form-control"
                                     type={s.rtype}
                                     name={s.name}
+                                    required
                                   ></input>
-                                  <input
-                                    className="form-control"
-                                    type="hidden"
-                                    name={s.rtype}
-                                    value={s.rtype}
-                                  ></input>
+                                  
                                 </div>
                               </div>
                             );
                           })}
-                        </table>
+                        </form>
 
                         <div className="form-group">
                           <div className="col-sm-offset-2 col-sm-10">
@@ -160,10 +164,11 @@ const createPatient = ({ form }) => {
                     <h2>Create Patient</h2>
                     <hr />
                     <div>
-                      <p>
-                        Aun no se ha creado nigun formulario, por favor cree su
-                        primer diseño
-                      </p>
+                      <div class="alert alert-info" role="alert">
+                        No form created yet. Please create your first form's
+                        design.
+                      </div>
+
                       <Link href="/formDesign">
                         <button
                           type="submit"
