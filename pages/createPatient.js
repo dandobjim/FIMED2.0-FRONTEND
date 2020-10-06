@@ -27,7 +27,7 @@ const createPatient = ({ form }) => {
       
       
     });
-    console.log(patients);
+    //console.log(patients);
   };
 
   const handleSubmit = (e) => {
@@ -42,10 +42,10 @@ const createPatient = ({ form }) => {
         patient_data: { patients: patients },
         Authorization: `Bearer ${cookie}`,
       },
-      body: patients,
+      body: JSON.stringify(patients),
     })
       .then((res) => {
-        //console.log(patients);
+        console.log(patients);
         if (!res.ok) {
           throw res;
         }
@@ -58,7 +58,7 @@ const createPatient = ({ form }) => {
       })
       .catch((err) => {
         console.log(`Error ${err.status}`);
-        console.log(patients);
+        //console.log(patients);
         err.json().then((patients) => {
           patients.detail.map((item, index) => {
             alert(item.msg);
