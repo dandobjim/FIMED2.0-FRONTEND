@@ -19,8 +19,7 @@ const updatePatient = ({ form, ID }) => {
   const handleChange = (e) => {
     setPatient({
       ...patient,
-      [e.target.name]: e.target.value,
-      [e.target.type]: e.target.type,
+      [e.target.name]: e.target.value
     });
   };
 

@@ -23,11 +23,9 @@ const createPatient = ({ form }) => {
   const handleChange = (e) => {
     setPatient({
       ...patients,
-      [e.target.name]: e.target.value
-      
-      
+      [e.target.name]: {"value":e.target.value, "type":e.target.type}
     });
-    //console.log(patients);
+    console.log(patients);
   };
 
   const handleSubmit = (e) => {
@@ -111,6 +109,12 @@ const createPatient = ({ form }) => {
                                     name={s.name}
                                     required
                                   ></input>
+                                  <input
+                                    type="hidden"
+                                    value={s.rtype}
+                                    name="type"
+                                  >
+                                  </input>
                                   
                                 </div>
                               </div>
