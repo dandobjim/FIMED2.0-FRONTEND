@@ -53,7 +53,6 @@ const updatePatient = ({ form, ID }) => {
       })
       .catch((err) => {
         console.log(`Error ${err.status}`);
-        console.log(patients);
         err.json().then((patients) => {
           patients.detail.map((item, index) => {
             alert(item.msg);
@@ -90,7 +89,7 @@ const updatePatient = ({ form, ID }) => {
                     >
                       {Object.entries(patient).map(([key, value], index) => {
                         return (
-                          <div className="row" key={index}>
+                          <div className="row" key={key}>
                             <div className="col-md-6 col-md">
                               <label className="control-label">{key}</label>
                               <input

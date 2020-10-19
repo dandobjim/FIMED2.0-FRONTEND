@@ -11,7 +11,7 @@ import { useUser } from "../lib/hooks/useUser";
 import Cookies from "js-cookie";
 import cookies from "next-cookies";
 import Router from "next/router";
-
+import { render } from "react-dom";
 
 function patientList({ patients }) {
   const user = useUser({ redirectTo: "/" });
@@ -19,13 +19,10 @@ function patientList({ patients }) {
 
   useState(patients);
 
-  const fetchDelete = (id) => {
+  const fetchDelete = (id) => {};
 
-  }
-
-  function handleDeleteClick (id) {
-
-    return (fetch(`${CONSTANTS.API.url}/api/v2/patient/delete` + "/" + id , {
+  function handleDeleteClick(id) {
+    return fetch(`${CONSTANTS.API.url}/api/v2/patient/delete` + "/" + id, {
       method: "delete",
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -33,22 +30,24 @@ function patientList({ patients }) {
         Authorization: `Bearer ${cookie}`,
       },
       //body: JSON.stringify( id ),
-    }).then((res) => {
-      //console.log(res);
-      alert("Patient deleted satisfactory");
-      window.location.reload(false)
-      //Router.push("/home");
-    }).catch((err) => {
-      console.log(err)
-      console.log(`Error ${err.status}`);
-      
-      err.json().then(() => {
-        id.detail.map((item, index) => {
-          alert(item.msg);
+    })
+      .then((res) => {
+        //console.log(res);
+        alert("Patient deleted satisfactory");
+        window.location.reload(false);
+        //Router.push("/home");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(`Error ${err.status}`);
+
+        err.json().then(() => {
+          id.detail.map((item, index) => {
+            alert(item.msg);
+          });
         });
       });
-    }))
-  };
+  }
 
   const [patient, usePatient] = useState(patients);
   //console.log(patient)
@@ -77,94 +76,106 @@ function patientList({ patients }) {
 
                 {patient.map((s, index) => {
                   return (
-                    <form>
-                      <div key={index}>
-                        <table className="table table-condensed table-striped">
-                          <thead>
-                            <tr>
-                              <th
-                                align="center"
-                                css={css`
-                                  text-align: "center";
-                                  font-size: 14px;
-                                `}
-                                colSpan="2"
-                              >
-                                ID : {s.id}
-                              </th>
-                              <Link href={`updatePatient/${s.id}`}>
+                    <>
+                      <form>
+                        <div
+                          key={index}
+                          className="table-wrapper-scroll-y my-custom-scrollbar"
+                        >
+                          <table className="table table-condensed table-striped mb-0">
+                            <thead>
+                              <tr>
+                                <th
+                                  align="center"
+                                  css={css`
+                                    text-align: "center";
+                                    font-size: 14px;
+                                  `}
+                                  colSpan="2"
+                                >
+                                  ID : {s.id}
+                                </th>
+                                <Link href={`updatePatient/${s.id}`}>
+                                  <a
+                                    className="glyphicon glyphicon-pencil"
+                                    css={css`
+                                      margin-top: 1rem;
+                                      color: black;
+                                      border: none;
+                                      position: relative;
+                                      left: 1rem;
+                                    `}
+                                  ></a>
+                                </Link>
+
                                 <a
-                                  className="glyphicon glyphicon-pencil"
+                                  className="glyphicon glyphicon-remove"
                                   css={css`
                                     margin-top: 1rem;
                                     color: black;
                                     border: none;
                                     position: relative;
                                     left: 1rem;
+                                    margin-left: 1rem;
                                   `}
+                                  onClick={() => handleDeleteClick(s.id)}
                                 ></a>
-                              </Link>
-
-                              <a
-                                className="glyphicon glyphicon-remove"
-                                
+                              </tr>
+                            </thead>
+                            <div>
+                              <table
+                                className="table table-condensed table-bordered "
                                 css={css`
-                                  margin-top: 1rem;
-                                  color: black;
-                                  border: none;
-                                  position: relative;
-                                  left: 1rem;
-                                  margin-left: 1rem;
+                                  width: 90%;
+                                  margin-top: 25px;
+                                  margin-bottom: 10px;
                                 `}
-                                onClick={ () => handleDeleteClick(s.id)}
-                              ></a>
-                            </tr>
-                          </thead>
-                          <table
-                            className="table table-condensed table-bordered"
-                            css={css`
-                              width: 90%;
-                              margin-top: 25px;
-                              margin-bottom: 10px;
-                            `}
-                            allign="center"
-                          >
-                            <tbody>
-                              {Object.keys(s.clinical_information).map(
-                                (item, i) => (
-                                  <tr>
-                                    <td
-                                      className="col-md-2"
-                                      css={css`
-                                        text-align: center;
-                                        background-color: rgba(
-                                          235,
-                                          105,
-                                          9,
-                                          0.65
-                                        );
-                                        font-weight: bold;
-                                      `}
-                                    >
-                                      {item}:
-                                    </td>
-                                    <td
-                                      className="col-md-6"
-                                      css={css`
-                                        text-align: left;
-                                        background-color: #fff;
-                                      `}
-                                    >
-                                     {s.clinical_information[item].value} 
-                                    </td>
-                                  </tr>
-                                )
-                              )}
-                            </tbody>
+                                allign="center"
+                              >
+                                <tbody>
+                                  {s.clinical_information.map((item, i) => {
+                                    return(
+                                      Object.keys(item).map((it, i) => (
+                                        <tr>
+                                          <td
+                                            className="col-md-2"
+                                            css={css`
+                                              text-align: center;
+                                              background-color: rgba(
+                                                235,
+                                                105,
+                                                9,
+                                                0.65
+                                              );
+                                              font-weight: bold;
+                                            `}
+                                          >{it != "rtype"? it: 0}:
+                                          </td>
+                                          
+                                          <td
+                                            className="col-md-6"
+                                            css={css`
+                                              text-align: left;
+                                              background-color: #fff;
+                                              font-weight: bold;
+                                            `}
+                                          >
+                                           {it.values()} 
+                                          </td>
+                                        </tr>
+                                      ))
+                                    )
+                                    
+                                  })}
+                                  
+                                </tbody>
+                              </table>
+                            </div>
                           </table>
-                        </table>
-                      </div>
-                    </form>
+                        </div>
+                      </form>
+                      <hr />
+                    </>
                   );
                 })}
               </div>
