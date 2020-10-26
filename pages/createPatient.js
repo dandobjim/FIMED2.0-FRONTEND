@@ -19,13 +19,53 @@ const createPatient = ({ form }) => {
   const cookie = Cookies.get("fimedtk");
 
   const [patients, setPatient] = useState({});
-  
+  const [path, setPath] = useState({});
+
+
   const handleChange = (e) => {
     setPatient({
       ...patients,
-      [e.target.name]: {value:e.target.value, type: e.target.type}
+      [e.target.name]: { value: e.target.value, type: e.target.type },
     });
     console.log(patients);
+  };
+
+  const handelCSVChange = (e) =>{
+    setPath(e.target.files[0])
+  } 
+
+  const submitCSV = (e) => {
+    e.preventDefault();
+    fetch(`${CONSTANTS.API.url}/api/v2/patient/create_by_csv`, {
+      method: "post",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        file_path: { path},
+        Authorization: `Bearer ${cookie}`,
+      },
+      body: JSON.stringify(path),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        alert("Patient created satisfactory");
+        return res.json();
+      })
+      .then((res) => {
+        window.location.reload(false);
+        //Router.push("/createPatient");
+      })
+      .catch((err) => {
+        console.log(`Error ${err.status}`);
+        //console.log(patients);
+        err.json().then((patients) => {
+          patients.detail.map((item, index) => {
+            alert(item.msg);
+          });
+        });
+      });
   };
 
   const handleSubmit = (e) => {
@@ -43,7 +83,6 @@ const createPatient = ({ form }) => {
       body: JSON.stringify(patients),
     })
       .then((res) => {
-        console.log(patients);
         if (!res.ok) {
           throw res;
         }
@@ -87,6 +126,29 @@ const createPatient = ({ form }) => {
                     <h2>Create Patient</h2>
                     <hr />
                     <div>
+                      <form onSubmit={submitCSV} onChange={handelCSVChange}>
+                        <a
+                          css={css`
+                            color: black;
+                            font-weight: bold;
+                          `}
+                        >
+                          Import csv file
+                        </a>
+                        <input type="file" className ="file"/>
+                        <div className="form-group">
+                          <div className="col-sm-offset-2 col-sm-10">
+                            <input
+                              type="submit"
+                              className="btn-sm btn-primary button-field"
+                              css={css`
+                                margin-top: 7px;
+                              `}
+                              value="Import csv"
+                            />
+                          </div>
+                        </div>
+                      </form>
                       <form
                         id="crate-patient"
                         method="post"
@@ -94,6 +156,7 @@ const createPatient = ({ form }) => {
                         onSubmit={handleSubmit}
                         onChange={handleChange}
                       >
+                        
                         <form>
                           {form.map((s, index) => {
                             return (
@@ -102,19 +165,49 @@ const createPatient = ({ form }) => {
                                   <label className="control-label">
                                     {s.name}:
                                   </label>
+                                  {s.rtype == "int64" ? (
+                                    <input
+                                      className="form-control"
+                                      type="Number"
+                                      name={s.name}
+                                      required
+                                    />
+                                  ) : 
+                                    null
+                                  }
                                   
-                                  <input
-                                    className="form-control"
-                                    type={s.rtype}
-                                    name={s.name}
-                                    required
-                                  ></input>
-                                  <input
-                                    type="hidden"
-                                    value={s.rtype}
-                                    name="type"
-                                  >
-                                  </input>
+                                  {s.rtype == "float" ? (
+                                    <input
+                                      className="form-control"
+                                      type="Number"
+                                      name={s.name}
+                                      required
+                                    />
+                                  ) : null}
+                                  {s.rtype == "string"||s.rtype == "String" ? (
+                                    <input
+                                      className="form-control"
+                                      type="Text"
+                                      name={s.name}
+                                      required
+                                    />
+                                  ) : null}
+                                  {s.rtype == "datetime" ? (
+                                    <input
+                                      className="form-control"
+                                      type="Date"
+                                      name={s.name}
+                                      required
+                                    />
+                                  ) : null}
+                                  {s.rtype == "object" ? (
+                                    <input
+                                      className="form-control"
+                                      type="Text"
+                                      name={s.name}
+                                      required
+                                    />
+                                  ) : null}
                                   
                                 </div>
                               </div>
@@ -168,6 +261,29 @@ const createPatient = ({ form }) => {
                     <h2>Create Patient</h2>
                     <hr />
                     <div>
+                    <form onSubmit={submitCSV} onChange={handelCSVChange}>
+                        <a
+                          css={css`
+                            color: black;
+                            font-weight: bold;
+                          `}
+                        >
+                          Import csv file
+                        </a>
+                        <input type="file" className ="file"/>
+                        <div className="form-group">
+                          <div className="col-sm-offset-2 col-sm-10">
+                            <input
+                              type="submit"
+                              className="btn-sm btn-primary button-field"
+                              css={css`
+                                margin-top: 7px;
+                              `}
+                              value="Import csv"
+                            />
+                          </div>
+                        </div>
+                      </form>
                       <div class="alert alert-info" role="alert">
                         No form created yet. Please create your first form's
                         design.

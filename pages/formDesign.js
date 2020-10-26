@@ -108,12 +108,14 @@ const formDesign = ({ form_row }) => {
                               className="form-control"
                               data-id={index}
                               name="rtype"
-                              defaultValue={s.rtype}
+                              defaultValue={s.rtype} 
                             >
-                              <option value="text">String</option>
-                              <option value="number">Number</option>
-                              <option value="date">Date</option>
-                              <option value="checkbox">Boolean</option>
+                              <option value="float">Float</option>
+                              <option value="int64">Int64</option>
+                              <option value="datetime">Datetime</option>
+                              <option value="string">String</option>
+                              <option value="object">Object</option>
+
                             </select>
                             <br />
                             <hr />

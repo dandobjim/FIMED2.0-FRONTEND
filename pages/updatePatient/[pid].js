@@ -21,7 +21,6 @@ const updatePatient = ({ form, ID }) => {
       [e.target.name]: {value:e.target.value, type: e.target.type}
     });
 
-    console.log(patient)
   };
 
   const handleSubmit = (e) => {
