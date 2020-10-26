@@ -1,5 +1,5 @@
 export const CONSTANTS = {
   API: {
-    url: "http://localhost:8083",
+    url: "http://localhost:8080",
   },
 };

@@ -75,6 +75,7 @@ function patientList({ patients }) {
                 </div>
 
                 {patient.map((s, index) => {
+                  
                   return (
                     <>
                       <form>
@@ -133,10 +134,9 @@ function patientList({ patients }) {
                                 allign="center"
                               >
                                 <tbody>
-                                  {s.clinical_information.map((item, i) => {
+                                  {Object.keys(s.clinical_information).map((item, i) => {
                                     return(
-                                      Object.keys(item).map((it, i) => (
-                                        <tr>
+                                      <tr>
                                           <td
                                             className="col-md-2"
                                             css={css`
@@ -149,7 +149,7 @@ function patientList({ patients }) {
                                               );
                                               font-weight: bold;
                                             `}
-                                          >{it != "rtype"? it: 0}:
+                                          >{item != "type"? item: 0}:
                                           </td>
                                           
                                           <td
@@ -160,10 +160,9 @@ function patientList({ patients }) {
                                               font-weight: bold;
                                             `}
                                           >
-                                           {it.values()} 
+                                           {s.clinical_information[item]["value"]} 
                                           </td>
                                         </tr>
-                                      ))
                                     )
                                     
                                   })}
