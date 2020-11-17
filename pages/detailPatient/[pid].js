@@ -9,58 +9,12 @@ import Cookies from "js-cookie";
 import cookies from "next-cookies";
 import { useUser } from "../../lib/hooks/useUser";
 
-const updatePatient = ({ form, ID }) => {
+const detailPatient = ({ form, ID }) => {
   const user = useUser({ redirectTo: "/" });
   const cookie = Cookies.get("fimedtk");
 
   const [patient, setPatient] = useState(form);
 
-  const handleChange = (e) => {
-    setPatient({
-      ...patient,
-      [e.target.name]: {value:e.target.value, type: e.target.type}
-    });
-
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //validation
-
-    fetch(`${CONSTANTS.API.url}/api/v2/patient/update/${ID} `, {
-      method: "post",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        patient_data: { patient: patient },
-        Authorization: `Bearer ${cookie}`,
-      },
-      body: JSON.stringify(patient),
-    })
-      .then((res) => {
-        //console.log(patients);
-        if (!res.ok) {
-          throw res;
-        }
-        alert("Patient created satisfactory");
-        return res.json();
-      })
-      .then((res) => {
-        console.log(res);
-        window.location.reload(false);
-        //Router.push("/createPatient");
-      })
-      .catch((err) => {
-        console.log(`Error ${err.status}`);
-        err.json().then((patients) => {
-          patients.detail.map((item, index) => {
-            alert(item.msg);
-          });
-        });
-      });
-  };
-  console.log(form);
-  console.log(ID);
   return (
     <>
       <head>
@@ -79,14 +33,11 @@ const updatePatient = ({ form, ID }) => {
                     margin-top: 0px;
                   `}
                 >
-                  <h2>Update Patient</h2>
+                  <h2>Patient Details</h2>
                   <hr />
                   <div>
-                    <form
-                      onChange={handleChange}
-                      onSubmit={handleSubmit}
-                      encType="multipart/form-data"
-                    >
+                    <form encType="multipart/form-data">
+                      <h2>ID: {ID}</h2>
                       {Object.entries(patient).map(([key, value], index) => {
                         return (
                           <div className="row" key={key}>
@@ -96,7 +47,7 @@ const updatePatient = ({ form, ID }) => {
                                 className="form-control"
                                 name={key}
                                 value={value.value}
-                                type={value.type} 
+                                type={value.type}
                               ></input>
                             </div>
                           </div>
@@ -104,14 +55,17 @@ const updatePatient = ({ form, ID }) => {
                       })}
 
                       <div className="col-sm-offset-2 col-sm-10">
-                        <input
-                          type="submit"
-                          className="btn-sm btn-primary button-field"
-                          css={css`
-                            margin-top: 7px;
-                          `}
-                          value="Update Patient"
-                        />
+                        <form action="/patientList" method="get">
+                          <input
+                            type="submit"
+                            href="/patientList"
+                            className="btn-sm btn-primary"
+                            css={css`
+                              margin-top: 5rem;
+                            `}
+                            value="Back to list"
+                          />
+                        </form>
                       </div>
                     </form>
                   </div>
@@ -140,7 +94,7 @@ export async function getServerSideProps(ctx) {
     }
   );
 
-  const ID = ctx.params.pid
+  const ID = ctx.params.pid;
   const form = await res.json();
   return {
     props: {
@@ -150,4 +104,4 @@ export async function getServerSideProps(ctx) {
   };
 }
 
-export default updatePatient;
+export default detailPatient;

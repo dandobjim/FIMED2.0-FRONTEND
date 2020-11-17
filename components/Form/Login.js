@@ -36,7 +36,6 @@ const Login = () => {
       })
       .then((res) => {
         Cookies.set("fimedtk", res.access_token);
-        console.log("Todo ok dani entra");
         Router.push("/home");
       })
       .catch((err) => {

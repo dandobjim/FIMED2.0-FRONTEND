@@ -6,6 +6,8 @@ Before all, install the necessaries packages
 sudo apt install nodejs
 sudo apt install npm
 npm install next react react-dom
+npm install axios
+npm install react-paginate
 ```
 
 

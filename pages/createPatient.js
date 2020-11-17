@@ -9,11 +9,8 @@ import fetch from "node-fetch";
 import Cookies from "js-cookie";
 import { useUser } from "../lib/hooks/useUser";
 import cookies from "next-cookies";
-import Router from "next/router";
+import axios from "axios";
 import Link from "next/link";
-import { render } from "react-dom";
-import FileUploader from "../components/FileUploader";
-import axios from 'axios';
 
 const createPatient = ({ form }) => {
   const user = useUser({ redirectTo: "/" });
@@ -21,14 +18,13 @@ const createPatient = ({ form }) => {
   const cookie = Cookies.get("fimedtk");
 
   const [patients, setPatient] = useState({});
-  const [content, setContent] = useState();
+  const [file, setFile] = useState({});
 
   const handleChange = (e) => {
     setPatient({
       ...patients,
       [e.target.name]: { value: e.target.value, type: e.target.type },
     });
-    console.log(patients);
   };
 
   const handleSubmit = (e) => {
@@ -67,8 +63,30 @@ const createPatient = ({ form }) => {
       });
   };
 
-  const handleData = (e) => {setContent(e)};
-    
+  const handleFile = (e) => {
+    let file = e.target.files[0];
+    setFile(file);
+  };
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    let formdata = new FormData();
+    formdata.append("file", file);
+    console.log(formdata);
+    axios({
+      url: `${CONSTANTS.API.url}/api/v2/patient/create_by_csv`,
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+      data: formdata,
+    }).then((res) => {
+      window.location.reload(false);
+      alert("File upload suscessfully");
+    });
+  };
+
+  if (form.length == 0) {
     return (
       <>
         <head>
@@ -91,21 +109,82 @@ const createPatient = ({ form }) => {
                     <h2>Create Patient</h2>
                     <hr />
                     <div>
-                      <form onSubmit={submitForm}>
-                        <a
-                          css={css`
-                            color: black;
-                            font-weight: bold;
-                          `}
-                        >
-                          Import csv file
-                        </a>
-                        <FileUploader
-                          file = {handleData}
+                      <div className="">
+                        <label>Select File</label>
+                        <input
+                          type="file"
+                          name="file"
+                          onChange={(e) => handleFile(e)}
                         />
-                        <button onClick = {submitForm}>IMPORT CSV</button>
-                      </form>
-                      
+                        <br />
+                        <button
+                          type="button"
+                          onClick={(e) => handleUpload(e)}
+                          className="btn btn-primary"
+                        >
+                          Upload
+                        </button>
+                      </div>
+                      <br />
+                      <div>
+                        <div className="alert alert-warning" role = "alert">
+                          Form don't create yet <a href = "/formDesign" className="alert-link">
+                            create a new form 
+                          </a> please.
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+          <Footer />
+        </body>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <head>
+          <Head />
+        </head>
+
+        <body>
+          <Navbar />
+          <main>
+            <div className="container">
+              <div className="panel panel-default">
+                <div className="panel-body">
+                  <div
+                    className="page-header"
+                    css={css`
+                      margin-top: 0px;
+                    `}
+                  >
+                    <LogoContainer />
+                    <h2>Create Patient</h2>
+                    <hr />
+                    <div>
+                      <div className="">
+                        <label>Select File</label>
+                        <input
+                          type="file"
+                          name="file"
+                          onChange={(e) => handleFile(e)}
+                        />
+                        <br />
+                        <button
+                          type="button"
+                          onClick={(e) => handleUpload(e)}
+                          className="btn btn-primary"
+                        >
+                          {" "}
+                          Upload{" "}
+                        </button>
+                      </div>
+                      <br />
                       <form
                         id="crate-patient"
                         method="post"
@@ -113,7 +192,6 @@ const createPatient = ({ form }) => {
                         onSubmit={handleSubmit}
                         onChange={handleChange}
                       >
-                        
                         <form>
                           {form.map((s, index) => {
                             return (
@@ -122,68 +200,29 @@ const createPatient = ({ form }) => {
                                   <label className="control-label">
                                     {s.name}:
                                   </label>
-                                  {s.rtype == "int64" ? (
-                                    <input
-                                      className="form-control"
-                                      type="Number"
-                                      name={s.name}
-                                      required
-                                    />
-                                  ) : 
-                                    null
-                                  }
-                                  
-                                  {s.rtype == "float" ? (
-                                    <input
-                                      className="form-control"
-                                      type="Number"
-                                      name={s.name}
-                                      required
-                                    />
-                                  ) : null}
-                                  {s.rtype == "string"||s.rtype == "String" ? (
-                                    <input
-                                      className="form-control"
-                                      type="Text"
-                                      name={s.name}
-                                      required
-                                    />
-                                  ) : null}
-                                  {s.rtype == "datetime" ? (
-                                    <input
-                                      className="form-control"
-                                      type="Date"
-                                      name={s.name}
-                                      required
-                                    />
-                                  ) : null}
-                                  {s.rtype == "object" ? (
-                                    <input
-                                      className="form-control"
-                                      type="Text"
-                                      name={s.name}
-                                      required
-                                    />
-                                  ) : null}
-                                  
+                                  <input
+                                    className="form-control"
+                                    type="text"
+                                    name={s.name}
+                                    required
+                                  />
                                 </div>
                               </div>
                             );
                           })}
-                        </form>
-
-                        <div className="form-group">
-                          <div className="col-sm-offset-2 col-sm-10">
-                            <input
-                              type="submit"
-                              className="btn-sm btn-primary button-field"
-                              css={css`
-                                margin-top: 7px;
-                              `}
-                              value="Create Patient"
-                            />
+                          <div className="form-group">
+                            <div className="col-sm-offset-2 col-sm-10">
+                              <input
+                                type="submit"
+                                className="btn-sm btn-primary button-field"
+                                css={css`
+                                  margin-top: 7px;
+                                `}
+                                value="Create Patient"
+                              />
+                            </div>
                           </div>
-                        </div>
+                        </form>
                       </form>
                     </div>
                   </div>
@@ -195,6 +234,7 @@ const createPatient = ({ form }) => {
         </body>
       </>
     );
+  }
 };
 
 export async function getServerSideProps(ctx) {
@@ -206,7 +246,9 @@ export async function getServerSideProps(ctx) {
     headers: { Authorization: `Bearer ${allCookies.fimedtk}` },
   });
 
-  const form = await res.json();
+  let form = await res.json();
+  form == null ? (form = []) : null;
+
   return {
     props: {
       form,

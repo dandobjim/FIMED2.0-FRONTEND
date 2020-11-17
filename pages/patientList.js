@@ -1,56 +1,45 @@
-import React, { useState } from "react";
-import Head from "../components/Head";
-import Footer from "../components/Footer";
+import React, { useState, useEffect } from "react";
 import { css } from "@emotion/core";
-import Navbar from "../components/Navbar";
-import fetch from "node-fetch";
-import { CONSTANTS } from "../shared/Constants";
-import LogoContainer from "../components/Logo";
-import Link from "next/link";
-import { useUser } from "../lib/hooks/useUser";
 import Cookies from "js-cookie";
 import cookies from "next-cookies";
-import Router from "next/router";
-import { render } from "react-dom";
+import axios from "axios";
 
-function patientList({ patients }) {
+import Head from "../components/Head";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import { CONSTANTS } from "../shared/Constants";
+import LogoContainer from "../components/Logo";
+import { useUser } from "../lib/hooks/useUser";
+import { Posts } from "../components/Posts";
+import Pagination from "../components/Pagination";
+
+function patientList() {
   const user = useUser({ redirectTo: "/" });
   const cookie = Cookies.get("fimedtk");
 
-  useState(patients);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(6);
 
-  const fetchDelete = (id) => {};
-
-  function handleDeleteClick(id) {
-    return fetch(`${CONSTANTS.API.url}/api/v2/patient/delete` + "/" + id, {
-      method: "delete",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cookie}`,
-      },
-      //body: JSON.stringify( id ),
-    })
-      .then((res) => {
-        //console.log(res);
-        alert("Patient deleted satisfactory");
-        window.location.reload(false);
-        //Router.push("/home");
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log(`Error ${err.status}`);
-
-        err.json().then(() => {
-          id.detail.map((item, index) => {
-            alert(item.msg);
-          });
-        });
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+      const res = await axios.get(`${CONSTANTS.API.url}/api/v2/patient/all`, {
+        headers: { Authorization: `Bearer ${cookie}` },
       });
-  }
+      setPosts(res.data);
+      setLoading(false);
+    };
+    fetchPosts();
+  }, []);
 
-  const [patient, usePatient] = useState(patients);
-  //console.log(patient)
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const curretPost = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
   return (
     <>
       <head>
@@ -73,110 +62,12 @@ function patientList({ patients }) {
                   <LogoContainer />
                   <h2>Patient List</h2>
                 </div>
-
-                {patient.map((s, index) => {
-                  
-                  return (
-                    <>
-                      <form>
-                        <div
-                          key={index}
-                          className="table-wrapper-scroll-y my-custom-scrollbar"
-                        >
-                          <table className="table table-condensed table-striped mb-0">
-                            <thead>
-                              <tr>
-                                <th
-                                  align="center"
-                                  css={css`
-                                    text-align: "center";
-                                    font-size: 14px;
-                                  `}
-                                  colSpan="2"
-                                >
-                                  ID : {s.id}
-                                </th>
-                                <Link href={`updatePatient/${s.id}`}>
-                                  <a
-                                    className="glyphicon glyphicon-pencil"
-                                    css={css`
-                                      margin-top: 1rem;
-                                      color: black;
-                                      border: none;
-                                      position: relative;
-                                      left: 1rem;
-                                    `}
-                                  ></a>
-                                </Link>
-
-                                <a
-                                  className="glyphicon glyphicon-remove"
-                                  css={css`
-                                    margin-top: 1rem;
-                                    color: black;
-                                    border: none;
-                                    position: relative;
-                                    left: 1rem;
-                                    margin-left: 1rem;
-                                  `}
-                                  onClick={() => handleDeleteClick(s.id)}
-                                ></a>
-                              </tr>
-                            </thead>
-                            <div>
-                              <table
-                                className="table table-condensed table-bordered "
-                                css={css`
-                                  width: 90%;
-                                  margin-top: 25px;
-                                  margin-bottom: 10px;
-                                `}
-                                allign="center"
-                              >
-                                <tbody>
-                                  {Object.keys(s.clinical_information).map((item, i) => {
-                                    return(
-                                      <tr>
-                                          <td
-                                            className="col-md-2"
-                                            css={css`
-                                              text-align: center;
-                                              background-color: rgba(
-                                                235,
-                                                105,
-                                                9,
-                                                0.65
-                                              );
-                                              font-weight: bold;
-                                            `}
-                                          >{item != "type"? item: 0}:
-                                          </td>
-                                          
-                                          <td
-                                            className="col-md-6"
-                                            css={css`
-                                              text-align: left;
-                                              background-color: #fff;
-                                              font-weight: bold;
-                                            `}
-                                          >
-                                           {s.clinical_information[item]["value"]} 
-                                          </td>
-                                        </tr>
-                                    )
-                                    
-                                  })}
-                                  
-                                </tbody>
-                              </table>
-                            </div>
-                          </table>
-                        </div>
-                      </form>
-                      <hr />
-                    </>
-                  );
-                })}
+                <Posts posts={curretPost} loading={loading} />
+                <Pagination
+                  postsPerPage={postsPerPage}
+                  totalPosts={posts.length}
+                  paginate = {paginate}
+                />
               </div>
             </div>
           </div>
@@ -192,20 +83,8 @@ export async function getServerSideProps(ctx) {
   // You can use any data fetching library
   //get cookie
   const allCookies = cookies(ctx);
-  const res = await fetch(`${CONSTANTS.API.url}/api/v2/patient/all`, {
-    method: "GET",
-    headers: { Authorization: `Bearer ${allCookies.fimedtk}` },
-  });
-
-  var patients = await res.json();
-  {
-    patients == [] ? (patients = []) : null;
-  }
-  //console.log(patients)
   return {
-    props: {
-      patients,
-    },
+    props: {},
   };
 }
 
