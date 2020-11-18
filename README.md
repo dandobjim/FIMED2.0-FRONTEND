@@ -8,6 +8,7 @@ sudo apt install npm
 npm install next react react-dom
 npm install axios
 npm install react-paginate
+npm install --save react-recaptcha
 ```
 
 
