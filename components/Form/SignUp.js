@@ -3,6 +3,7 @@ import { CONSTANTS } from "../../shared/Constants";
 import { css } from "@emotion/core";
 import Link from "next/link";
 import Router from "next/router";
+import Recaptcha from "react-recaptcha";
 
 const FormSignUp = () => {
   const [data, setData] = useState({
@@ -12,6 +13,16 @@ const FormSignUp = () => {
     password: "",
   });
 
+  const [verified, setVerified] = useState(false);
+
+  const recaptchaLoaded = () => {
+    console.log("captcha loaded");
+  };
+
+  const verifiedLoadCaptcha = () => {
+    setVerified(true);
+  };
+
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -19,34 +30,37 @@ const FormSignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     //validation
-
-    fetch(`${CONSTANTS.API.url}/api/v2/auth/register`, {
-      method: "post",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw res;
-        }
-        alert("User created satisfactory, redirecting to login page");
-        return res.json();
+    if (verified == true) {
+      fetch(`${CONSTANTS.API.url}/api/v2/auth/register`, {
+        method: "post",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       })
-      .then((res) => {
-        Router.push("/")
-      })
-      .catch((err) => {
-        console.log(err)
-        console.log(`Error ${err.status}`);
-        err.json().then((data) => {
-          data.detail.map((item, index) => {
-            alert(item.msg);
+        .then((res) => {
+          if (!res.ok) {
+            throw res;
+          }
+          alert("User created satisfactory, redirecting to login page");
+          return res.json();
+        })
+        .then((res) => {
+          Router.push("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(`Error ${err.status}`);
+          err.json().then((data) => {
+            data.detail.map((item, index) => {
+              alert(item.msg);
+            });
           });
         });
-      });
+    } else {
+      alert("Please verify that you are not a robot");
+    }
   };
 
   const prueba = (e) => {
@@ -149,6 +163,18 @@ const FormSignUp = () => {
               `}
               value="Sign Up"
             />
+            <div
+              css={css`
+                margin-top: 10px;
+              `}
+            >
+              <Recaptcha
+                sitekey="6LdB9eMZAAAAAKjyP8lF-LsJi0gtnOOAFs6s-yZE"
+                render="explicit"
+                onloadCallback={recaptchaLoaded}
+                verifyCallback={verifiedLoadCaptcha}
+              />
+            </div>
           </div>
         </div>
       </form>

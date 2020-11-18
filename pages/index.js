@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/core";
 import Footer from "../components/Footer";
 import Link from "next/link";
 import Head from "../components/Head";
 import LogoContainer from "../components/Logo";
 import Login from "../components/Form/Login";
-
 
 const Logging = () => {
   return (
@@ -28,6 +27,7 @@ const Logging = () => {
                   <h2>Login Page:</h2>
                 </div>
                 <Login />
+
                 <div className="form-group">
                   <label htmlFor="register" className="col-sm-2 control-label">
                     Sign up:
