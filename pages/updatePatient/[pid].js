@@ -32,7 +32,6 @@ const updatePatient = ({ form, ID }) => {
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
-        patient_data: { patient: patient },
         Authorization: `Bearer ${cookie}`,
       },
       body: JSON.stringify(patient),
@@ -59,8 +58,6 @@ const updatePatient = ({ form, ID }) => {
         });
       });
   };
-  console.log(form);
-  console.log(ID);
   return (
     <>
       <head>

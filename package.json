@@ -17,9 +17,12 @@
     "js-cookie": "^2.2.1",
     "next": "^9.5.5",
     "next-cookies": "^2.0.3",
+    "next-pagination": "^2.1.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-hook-form": "^6.0.6",
+    "react-paginate": "^6.5.0",
+    "react-recaptcha": "^2.3.10",
     "swr": "^0.2.3"
   }
 }

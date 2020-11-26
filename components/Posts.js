@@ -43,7 +43,6 @@ export const Posts = ({ posts, loading }) => {
         });
       });
   }
-
   return (
     <ul className="list-group mb-4">
       {posts.map(posts => {
@@ -51,7 +50,7 @@ export const Posts = ({ posts, loading }) => {
           <>
             <form>
               <div
-                key={posts.id}
+                key={posts.id_secondary}
                 className="table-wrapper-scroll-y my-custom-scrollbar"
               >
                 <table className="table table-condensed table-striped mb-0">
@@ -65,13 +64,13 @@ export const Posts = ({ posts, loading }) => {
                         `}
                         colSpan="2"
                       >
-                        <a href={`detailPatient/${posts.id}`} css={css`
+                        <a href={`detailPatient/${posts.id_secondary}`} css={css`
                           color: black;
                         `}>
-                          ID : {posts.id}
+                          Patient's details 
                         </a>
                       </th>
-                      <Link href={`updatePatient/${posts.id}`}>
+                      <Link href={`updatePatient/${posts.id_secondary}`}>
                         <a
                           className="glyphicon glyphicon-pencil"
                           css={css`
@@ -94,7 +93,7 @@ export const Posts = ({ posts, loading }) => {
                           left: 1rem;
                           margin-left: 1rem;
                         `}
-                        onClick={() => handleDeleteClick(posts.id)}
+                        onClick={() => handleDeleteClick(posts.id_secondary)}
                       ></a>
                     </tr>
                   </thead>

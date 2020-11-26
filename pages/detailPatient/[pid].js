@@ -8,6 +8,7 @@ import fetch from "node-fetch";
 import Cookies from "js-cookie";
 import cookies from "next-cookies";
 import { useUser } from "../../lib/hooks/useUser";
+import Link from "next/link";
 
 const detailPatient = ({ form, ID }) => {
   const user = useUser({ redirectTo: "/" });
@@ -36,8 +37,7 @@ const detailPatient = ({ form, ID }) => {
                   <h2>Patient Details</h2>
                   <hr />
                   <div>
-                    <form encType="multipart/form-data">
-                      <h2>ID: {ID}</h2>
+                    <form encType="multipart/form-data"> 
                       {Object.entries(patient).map(([key, value], index) => {
                         return (
                           <div className="row" key={key}>
@@ -48,26 +48,25 @@ const detailPatient = ({ form, ID }) => {
                                 name={key}
                                 value={value.value}
                                 type={value.type}
+                                readOnly
                               ></input>
                             </div>
                           </div>
                         );
                       })}
-
-                      <div className="col-sm-offset-2 col-sm-10">
-                        <form action="/patientList" method="get">
-                          <input
-                            type="submit"
-                            href="/patientList"
-                            className="btn-sm btn-primary"
-                            css={css`
-                              margin-top: 5rem;
-                            `}
-                            value="Back to list"
-                          />
-                        </form>
-                      </div>
                     </form>
+                    <br/>
+                    <div className="col-sm-offset-2 col-sm-10">
+                          <Link href="/patientList">
+                            <a
+                              type="button"
+                              className="btn btn-primary"
+                              css={css`
+                                margin-top: 5rem;
+                              `}
+                            >Back to list</a>
+                          </Link>                          
+                      </div>
                   </div>
                 </div>
               </div>

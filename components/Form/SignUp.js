@@ -8,7 +8,8 @@ import Recaptcha from "react-recaptcha";
 const FormSignUp = () => {
   const [data, setData] = useState({
     username: "",
-    fullname: "",
+    name: "",
+    surname: "",
     email: "",
     password: "",
   });
@@ -87,7 +88,7 @@ const FormSignUp = () => {
               type="text"
               className="form-control"
               id="name"
-              name="fullname"
+              name="name"
               required
             />
           </div>
@@ -101,8 +102,8 @@ const FormSignUp = () => {
             <input
               type="text"
               className="form-control"
-              id="apellidos"
-              name="apellidos"
+              id="surname"
+              name="surname"
               required
             />
           </div>
