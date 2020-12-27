@@ -18,6 +18,7 @@
     "next": "^9.5.5",
     "next-cookies": "^2.0.3",
     "next-pagination": "^2.1.1",
+    "prettify": "^0.1.7",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-hook-form": "^6.0.6",

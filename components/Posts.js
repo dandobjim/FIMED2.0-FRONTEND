@@ -7,10 +7,9 @@ import cookies from "next-cookies";
 
 import { CONSTANTS } from "../shared/Constants";
 
-
 export const Posts = ({ posts, loading }) => {
   const cookie = Cookies.get("fimedtk");
-  
+
   if (loading) {
     return <h2>Loading...</h2>;
   }
@@ -45,7 +44,7 @@ export const Posts = ({ posts, loading }) => {
   }
   return (
     <ul className="list-group mb-4">
-      {posts.map(posts => {
+      {posts.map((posts) => {
         return (
           <>
             <form>
@@ -64,10 +63,13 @@ export const Posts = ({ posts, loading }) => {
                         `}
                         colSpan="2"
                       >
-                        <a href={`detailPatient/${posts.id_secondary}`} css={css`
-                          color: black;
-                        `}>
-                          Patient's details 
+                        <a
+                          href={`detailPatient/${posts.id_secondary}`}
+                          css={css`
+                            color: black;
+                          `}
+                        >
+                          Patient's details
                         </a>
                       </th>
                       <Link href={`updatePatient/${posts.id_secondary}`}>
@@ -108,33 +110,35 @@ export const Posts = ({ posts, loading }) => {
                       allign="center"
                     >
                       <tbody>
-                        {Object.keys(posts.clinical_information).map((item, i) => {
-                          return (
-                            <tr>
-                              <td
-                                className="col-md-2"
-                                css={css`
-                                  text-align: center;
-                                  background-color: rgba(235, 105, 9, 0.65);
-                                  font-weight: bold;
-                                `}
-                              >
-                                {item != "type" ? item : 0}:
-                              </td>
+                        {Object.keys(posts.clinical_information).map(
+                          (item, i) => {
+                            return (
+                              <tr>
+                                <td
+                                  className="col-md-2"
+                                  css={css`
+                                    text-align: center;
+                                    background-color: rgba(235, 105, 9, 0.65);
+                                    font-weight: bold;
+                                  `}
+                                >
+                                  {item != "type" ? item : 0}:
+                                </td>
 
-                              <td
-                                className="col-md-6"
-                                css={css`
-                                  text-align: left;
-                                  background-color: #fff;
-                                  font-weight: bold;
-                                `}
-                              >
-                                {posts.clinical_information[item]["value"]}
-                              </td>
-                            </tr>
-                          );
-                        })}
+                                <td
+                                  className="col-md-6"
+                                  css={css`
+                                    text-align: left;
+                                    background-color: #fff;
+                                    font-weight: bold;
+                                  `}
+                                >
+                                  {posts.clinical_information[item]["value"]}
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )}
                       </tbody>
                     </table>
                   </div>

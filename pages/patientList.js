@@ -38,7 +38,7 @@ function patientList() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const curretPost = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -66,7 +66,7 @@ function patientList() {
                 <Pagination
                   postsPerPage={postsPerPage}
                   totalPosts={posts.length}
-                  paginate = {paginate}
+                  paginate={paginate}
                 />
               </div>
             </div>

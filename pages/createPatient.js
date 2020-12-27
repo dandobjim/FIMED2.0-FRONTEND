@@ -36,7 +36,6 @@ const createPatient = ({ form }) => {
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json",
-        patient_data: { patients: patients },
         Authorization: `Bearer ${cookie}`,
       },
       body: JSON.stringify(patients),
@@ -127,12 +126,13 @@ const createPatient = ({ form }) => {
                       </div>
                       <br />
                       <div>
-                        <div className="alert alert-warning" role = "alert">
-                          Form don't create yet <a href = "/formDesign" className="alert-link">
-                            create a new form 
-                          </a> please.
+                        <div className="alert alert-warning" role="alert">
+                          Form don't create yet{" "}
+                          <a href="/formDesign" className="alert-link">
+                            create a new form
+                          </a>{" "}
+                          please.
                         </div>
-                        
                       </div>
                     </div>
                   </div>

@@ -127,13 +127,12 @@ const Login = () => {
             `}
           >
             <Recaptcha
-            sitekey="6LdB9eMZAAAAAKjyP8lF-LsJi0gtnOOAFs6s-yZE"
-            render="explicit"
-            onloadCallback={recaptchaLoaded}
-            verifyCallback={verifiedLoadCaptcha}
+              sitekey="6LdB9eMZAAAAAKjyP8lF-LsJi0gtnOOAFs6s-yZE"
+              render="explicit"
+              onloadCallback={recaptchaLoaded}
+              verifyCallback={verifiedLoadCaptcha}
             />
           </div>
-          
         </div>
       </form>
     </>

@@ -2,9 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { Global, css } from "@emotion/core";
 import cookies from "next-cookies";
-import router from 'next/router'
+import router from "next/router";
 import Cookies from "js-cookie";
-
 
 let navCss = css`
   .active {
@@ -52,12 +51,11 @@ let navCss = css`
 `;
 
 const Navbar = () => {
-
   const logoutClick = (e) => {
-    e.preventDefault()
-    Cookies.remove("fimedtk")
-    router.push("/")
-  }
+    e.preventDefault();
+    Cookies.remove("fimedtk");
+    router.push("/");
+  };
 
   return (
     <nav className="navbar navbar-default navbar-fixed-top">
@@ -179,12 +177,10 @@ const Navbar = () => {
           </ul>
           <ul className="nav navbar-nav navbar-right">
             <li>
-              
-                <a onClick={logoutClick}>
-                  <strong>Logout</strong>{" "}
-                  <span className="glyphicon glyphicon-log-out"></span>
-                </a>
-              
+              <a onClick={logoutClick}>
+                <strong>Logout</strong>{" "}
+                <span className="glyphicon glyphicon-log-out"></span>
+              </a>
             </li>
           </ul>
         </div>

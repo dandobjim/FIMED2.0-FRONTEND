@@ -37,7 +37,7 @@ const detailPatient = ({ form, ID }) => {
                   <h2>Patient Details</h2>
                   <hr />
                   <div>
-                    <form encType="multipart/form-data"> 
+                    <form encType="multipart/form-data">
                       {Object.entries(patient).map(([key, value], index) => {
                         return (
                           <div className="row" key={key}>
@@ -55,18 +55,20 @@ const detailPatient = ({ form, ID }) => {
                         );
                       })}
                     </form>
-                    <br/>
+                    <br />
                     <div className="col-sm-offset-2 col-sm-10">
-                          <Link href="/patientList">
-                            <a
-                              type="button"
-                              className="btn btn-primary"
-                              css={css`
-                                margin-top: 5rem;
-                              `}
-                            >Back to list</a>
-                          </Link>                          
-                      </div>
+                      <Link href="/patientList">
+                        <a
+                          type="button"
+                          className="btn btn-primary"
+                          css={css`
+                            margin-top: 5rem;
+                          `}
+                        >
+                          Back to list
+                        </a>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

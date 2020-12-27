@@ -18,9 +18,8 @@ const updatePatient = ({ form, ID }) => {
   const handleChange = (e) => {
     setPatient({
       ...patient,
-      [e.target.name]: {value:e.target.value, type: e.target.type}
+      [e.target.name]: { value: e.target.value, type: e.target.type },
     });
-
   };
 
   const handleSubmit = (e) => {
@@ -93,7 +92,7 @@ const updatePatient = ({ form, ID }) => {
                                 className="form-control"
                                 name={key}
                                 value={value.value}
-                                type={value.type} 
+                                type={value.type}
                               ></input>
                             </div>
                           </div>
@@ -137,7 +136,7 @@ export async function getServerSideProps(ctx) {
     }
   );
 
-  const ID = ctx.params.pid
+  const ID = ctx.params.pid;
   const form = await res.json();
   return {
     props: {

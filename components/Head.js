@@ -65,7 +65,11 @@ const Head = () => {
       <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
       {/*ReCaptcha*/}
-      <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
+      <script
+        src="https://www.google.com/recaptcha/api.js"
+        async
+        defer
+      ></script>
     </>
   );
 };

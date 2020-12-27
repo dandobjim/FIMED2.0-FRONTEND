@@ -32,7 +32,6 @@ const formDesign = ({ form_row }) => {
   };
 
   const handleChange = (e) => {
-    
     const _rows = [...rows];
     _rows[e.target.dataset.id][e.target.name] = e.target.value;
     setRows(_rows);
@@ -92,7 +91,7 @@ const formDesign = ({ form_row }) => {
                           <label className="control-label">{`Name #${
                             index + 1
                           }: `}</label>
-                          
+
                           <input
                             className="form-control"
                             data-id={index}
@@ -101,21 +100,19 @@ const formDesign = ({ form_row }) => {
                             value={s.name}
                           />
 
-                          
                           <div className="form-group">
                             <label className="control-label">Type:</label>
                             <select
                               className="form-control"
                               data-id={index}
                               name="rtype"
-                              defaultValue={s.rtype} 
+                              defaultValue={s.rtype}
                             >
                               <option value="float">Float</option>
                               <option value="int64">Int64</option>
                               <option value="datetime">Datetime</option>
                               <option value="string">String</option>
                               <option value="object">Object</option>
-
                             </select>
                             <br />
                             <hr />
