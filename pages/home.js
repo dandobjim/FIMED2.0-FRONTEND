@@ -24,8 +24,7 @@ const Home = () => {
                   className="page-header"
                   css={css`
                     margin-top: 0px;
-                  `}
-                >
+                  `}>
                   <Link href="/patientList">
                     <h1>Add or search a patient (s):</h1>
                   </Link>
@@ -35,10 +34,7 @@ const Home = () => {
                     <div className="col-md-6">
                       <h3>Add patient's data columns </h3>
                       <Link href="/formDesign">
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-lg btn-block"
-                        >
+                        <button type="submit" className="btn btn-primary btn-lg btn-block">
                           Form design
                         </button>
                       </Link>
@@ -46,10 +42,7 @@ const Home = () => {
                     <div className="col-md-6">
                       <h3>Search patients</h3>
                       <Link href="/patientList">
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-lg btn-block"
-                        >
+                        <button type="submit" className="btn btn-primary btn-lg btn-block">
                           Search patient (s)
                         </button>
                       </Link>
@@ -59,22 +52,18 @@ const Home = () => {
                     <div className="col-md-6">
                       <h3>Add new patient</h3>
                       <Link href="/createPatient">
-                        <button
-                          type="submit"
-                          className="btn btn-primary btn-lg btn-block"
-                        >
+                        <button type="submit" className="btn btn-primary btn-lg btn-block">
                           Add patient (s)
                         </button>
                       </Link>
                     </div>
                     <div className="col-md-6">
-                      <h3>Analyze your patients' genetic expression data</h3>
-                      <button
-                        type="submit"
-                        className="btn btn-primary btn-lg btn-block"
-                      >
-                        Gene level expression analysis
-                      </button>
+                      <h3>Analyze your patients</h3>
+                      <Link href="/analysis">
+                        <button type="submit" className="btn btn-primary btn-lg btn-block">
+                          Analysis
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </form>

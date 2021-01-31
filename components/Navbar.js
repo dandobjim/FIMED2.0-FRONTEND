@@ -62,12 +62,7 @@ const Navbar = () => {
       <Global styles={navCss} />
       <div className="container">
         <div className="navbar-header">
-          <button
-            type="button"
-            className="navbar-toggle"
-            data-toggle="collapse"
-            data-target="#myNavbar"
-          >
+          <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
@@ -78,8 +73,7 @@ const Navbar = () => {
               css={css`
                 padding-top: 0 !important;
                 padding-left: 15px !important;
-              `}
-            >
+              `}>
               <img
                 src="/static/img/logo.png"
                 css={css`
@@ -94,8 +88,7 @@ const Navbar = () => {
           id="myNavbar"
           css={css`
             color: #d58512;
-          `}
-        >
+          `}>
           <ul className="nav navbar-nav">
             <li className="nav-link">
               <Link href="/home">
@@ -118,34 +111,12 @@ const Navbar = () => {
                 </a>
               </Link>
             </li>
-            <li className="dropdown">
-              <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                <strong>Analysis</strong>
-                <span className="caret"></span>
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link href="/heatmapPage">
-                    <a>
-                      <strong>HeatMap</strong>
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/clusterheatmapPage">
-                    <a>
-                      <strong>Dendrogram + Heatmap</strong>
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/grnPage">
-                    <a>
-                      <strong>Gene Regulatory Network</strong>
-                    </a>
-                  </Link>
-                </li>
-              </ul>
+            <li>
+              <Link href="/analysis">
+                <a>
+                  <strong>Analysis</strong>
+                </a>
+              </Link>
             </li>
             <li className="dropdown">
               <a href="#" className="dropdown-toggle" data-toggle="dropdown">
@@ -169,8 +140,7 @@ const Navbar = () => {
             <li>
               <Link href="/manual">
                 <a>
-                  <strong>Help</strong>{" "}
-                  <span className=" glyphicon glyphicon-info-sign"></span>
+                  <strong>Help</strong> <span className=" glyphicon glyphicon-info-sign"></span>
                 </a>
               </Link>
             </li>
@@ -178,8 +148,7 @@ const Navbar = () => {
           <ul className="nav navbar-nav navbar-right">
             <li>
               <a onClick={logoutClick}>
-                <strong>Logout</strong>{" "}
-                <span className="glyphicon glyphicon-log-out"></span>
+                <strong>Logout</strong> <span className="glyphicon glyphicon-log-out"></span>
               </a>
             </li>
           </ul>

@@ -83,6 +83,18 @@ const createPatient = ({ form }) => {
       window.location.reload(false);
       alert("File upload suscessfully");
     });
+
+    axios({
+      url: `${CONSTANTS.API.url}/api/v2/analysis/upload_minio`,
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${cookie}`,
+      },
+      data: formdata,
+    }).then((res) => {
+      window.location.reload(false);
+      alert("File upload suscessfully");
+    });
   };
 
   if (form.length == 0) {
@@ -102,25 +114,16 @@ const createPatient = ({ form }) => {
                     className="page-header"
                     css={css`
                       margin-top: 0px;
-                    `}
-                  >
+                    `}>
                     <LogoContainer />
                     <h2>Create Patient</h2>
                     <hr />
                     <div>
                       <div className="">
                         <label>Select File</label>
-                        <input
-                          type="file"
-                          name="file"
-                          onChange={(e) => handleFile(e)}
-                        />
+                        <input type="file" name="file" onChange={(e) => handleFile(e)} />
                         <br />
-                        <button
-                          type="button"
-                          onClick={(e) => handleUpload(e)}
-                          className="btn btn-primary"
-                        >
+                        <button type="button" onClick={(e) => handleUpload(e)} className="btn btn-primary">
                           Upload
                         </button>
                       </div>
@@ -161,25 +164,16 @@ const createPatient = ({ form }) => {
                     className="page-header"
                     css={css`
                       margin-top: 0px;
-                    `}
-                  >
+                    `}>
                     <LogoContainer />
                     <h2>Create Patient</h2>
                     <hr />
                     <div>
                       <div className="">
                         <label>Select File</label>
-                        <input
-                          type="file"
-                          name="file"
-                          onChange={(e) => handleFile(e)}
-                        />
+                        <input type="file" name="file" onChange={(e) => handleFile(e)} />
                         <br />
-                        <button
-                          type="button"
-                          onClick={(e) => handleUpload(e)}
-                          className="btn btn-primary"
-                        >
+                        <button type="button" onClick={(e) => handleUpload(e)} className="btn btn-primary">
                           {" "}
                           Upload{" "}
                         </button>
@@ -190,22 +184,14 @@ const createPatient = ({ form }) => {
                         method="post"
                         encType="multipart/form-data"
                         onSubmit={handleSubmit}
-                        onChange={handleChange}
-                      >
+                        onChange={handleChange}>
                         <form>
                           {form.map((s, index) => {
                             return (
                               <div className="row" key={index}>
                                 <div className="col-md-6 col-md">
-                                  <label className="control-label">
-                                    {s.name}:
-                                  </label>
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    name={s.name}
-                                    required
-                                  />
+                                  <label className="control-label">{s.name}:</label>
+                                  <input className="form-control" type="text" name={s.name} required />
                                 </div>
                               </div>
                             );
