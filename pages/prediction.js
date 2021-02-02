@@ -16,6 +16,7 @@ const prediction = () => {
 
   const cookie = Cookies.get("fimedtk");
   const [file, setFile] = useState({});
+  const [data, setData] = useState([]);
 
   const handleFile = (e) => {
     let file = e.target.files[0];
@@ -26,7 +27,6 @@ const prediction = () => {
     e.preventDefault();
     let formdata = new FormData();
     formdata.append("file", file);
-    console.log(formdata);
     axios({
       url: `${CONSTANTS.API.url}/api/v2/analysis/prediction`,
       method: "POST",
@@ -35,8 +35,8 @@ const prediction = () => {
       },
       data: formdata,
     }).then((res) => {
-      window.location.reload(false);
       alert("File upload suscessfully");
+      setData(res.data)
     });
   };
 
@@ -65,6 +65,7 @@ const prediction = () => {
                       <label>Select File</label>
                       <input type="file" name="file" onChange={(e) => handleFile(e)} />
                       <br />
+                      {data.length > 0 && <> <hr/><span className ="center">[{data.join(', ')}]</span><hr/></>}
                       <button type="button" onClick={(e) => handleUpload(e)} className="btn btn-primary">
                         {" "}
                         Upload{" "}
